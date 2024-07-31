@@ -8,6 +8,7 @@ function App() {
     <>
       <Header />
       <Home />
+      <footer>&copy;2024</footer>
     </>
   )
 }
