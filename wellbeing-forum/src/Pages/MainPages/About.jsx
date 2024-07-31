@@ -5,7 +5,7 @@ export default function About() {
         <>
         <h1>This is a group project created by students of Telerik Academy</h1>
         <h1>Meet the creators:</h1>
-        <div>
+        <div id="creator-container">
             <div>
             <h3>Victor Manin</h3>
             </div>

@@ -5,6 +5,7 @@ export default function Header() {
     
     return (
         <>
+        <div id="header-div">
       <h1>Fitness Food and Lifestyle</h1>
       <input type="text" name="search" id="search"></input>
       <nav>
@@ -14,6 +15,7 @@ export default function Header() {
         <NavLink to="/food">Food</NavLink><br/>
         <NavLink to="/lifestyle">Lifestyle</NavLink><br/>
       </nav>
+      </div>
       </>
     )
 }
