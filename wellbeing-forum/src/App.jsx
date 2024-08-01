@@ -8,6 +8,7 @@ import Food from '../src/Pages/MainPages/Food';
 import Lifestyle from '../src/Pages/MainPages/Lifestyle';
 import Footer from './Components/MainComponents/Footer';
 import CreatePost from '../src/Pages/PostPages/CreatePost';
+import Register from './Pages/UserPages/Register';
 import { AppContext } from './state/app.context';
 import Register from './Pages/UserPages/Register';
 
@@ -20,21 +21,18 @@ function App() {
 
   return (
     <>
-    <AppContext.Provider value = {{... appState, setAppState}}>
-      <BrowserRouter>
-      <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/fitness' element={<Fitness />} />
-          <Route path='/food' element={<Food />} />
-          <Route path='/lifestyle' element={<Lifestyle />} />
-          <Route path='/CreatePost' element={<CreatePost />} />
-          <Route path='/Register' element={<Register />} />
-          
-        </Routes>
-      </BrowserRouter>
-    </AppContext.Provider>
+    <BrowserRouter>
+    <Header />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/fitness' element={<Fitness />} />
+        <Route path='/food' element={<Food />} />
+        <Route path='/lifestyle' element={<Lifestyle />} />
+        <Route path='/CreatePost' element={<CreatePost />} />
+        
+      </Routes>
+    </BrowserRouter>
       <Footer />
     </>
   )

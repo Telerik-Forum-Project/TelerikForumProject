@@ -15,6 +15,7 @@ export default function Header() {
         <NavLink to="/food">Food</NavLink>
         <NavLink to="/lifestyle">Lifestyle</NavLink>
         <NavLink to="/createPost">CreatePost</NavLink>
+        <NavLink to="/register">Register</NavLink>
       </nav>
       </div>
       </>
