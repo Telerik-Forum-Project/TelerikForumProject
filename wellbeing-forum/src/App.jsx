@@ -7,6 +7,7 @@ import Fitness from '../src/Pages/MainPages/Fitness';
 import Food from '../src/Pages/MainPages/Food';
 import Lifestyle from '../src/Pages/MainPages/Lifestyle';
 import Footer from './Components/Footer';
+import CreatePost from '../src/Pages/PostPages/CreatePost';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/fitness' element={<Fitness />} />
         <Route path='/food' element={<Food />} />
         <Route path='/lifestyle' element={<Lifestyle />} />
+        <Route path='/CreatePost' element={<CreatePost />} />
         
       </Routes>
     </BrowserRouter>
