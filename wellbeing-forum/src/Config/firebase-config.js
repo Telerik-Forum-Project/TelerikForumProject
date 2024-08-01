@@ -2,14 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> 401157abad0ac4412d64135a8c11d249d3811d89
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDILU8GuhT-fKVwnsjpl58CE4TsdgNS8Sg",
   authDomain: "wellbeing-forum-telerk.firebaseapp.com",
@@ -19,14 +12,9 @@ const firebaseConfig = {
   appId: "1:402944250987:web:cf707ed780bdadf3950d2e",
   databaseURL: 'https://wellbeing-forum-telerk-default-rtdb.europe-west1.firebasedatabase.app/'
 };
- 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> 401157abad0ac4412d64135a8c11d249d3811d89
 // the Firebase authentication handler
 export const auth = getAuth(app);
 // the Realtime Database handler
