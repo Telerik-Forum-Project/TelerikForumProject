@@ -16,10 +16,10 @@ export default function Post({ title, content, author, date, likes }) {
     );
   }
 
-  Post.propTypes = {
+Post.propTypes = {
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
-  };
+};
