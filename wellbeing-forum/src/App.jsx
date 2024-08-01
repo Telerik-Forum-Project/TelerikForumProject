@@ -6,6 +6,7 @@ import About from '../src/Pages/MainPages/About';
 import Fitness from '../src/Pages/MainPages/Fitness';
 import Food from '../src/Pages/MainPages/Food';
 import Lifestyle from '../src/Pages/MainPages/Lifestyle';
+import Footer from './Components/Footer';
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
         
       </Routes>
     </BrowserRouter>
-      <footer>&copy;2024</footer>
+      <Footer />
     </>
   )
 }
