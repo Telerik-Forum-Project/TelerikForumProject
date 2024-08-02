@@ -33,12 +33,9 @@ import { useState } from 'react';
         <Route path='/lifestyle' element={<Lifestyle />} />
         <Route path='/CreatePost' element={<CreatePost />} />
         <Route path='/Register' element={<Register />} />
-        
       </Routes>
     </BrowserRouter>
-
     </AppContext.Provider>
-
       <Footer />
     </>
   )
