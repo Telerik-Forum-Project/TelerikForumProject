@@ -1,23 +1,62 @@
+import { useContext, useState } from "react";
+import { AppContext } from "../../state/app.context";
+import { useNavigate } from "react-router-dom";
+import { createUserHandle, getUserByHandle } from "../../Services/user.services";
+import { registerUser } from "../../Services/authenticate-service";
 
 export default function Register(){
-    
-
+       const [user, setUser] = useState({
+              handle: '',
+              email: '',
+              password: '',
+            });
+            const { setAppState } = useContext(AppContext);
+            const navigate = useNavigate();
+          
+            const updateUser = prop => e => {
+              setUser({
+                ...user,
+                [prop]: e.target.value,
+              })
+            };
+          
+            const register = async () => {
+              if (!user.email || !user.password) {
+                return alert('No credentials provided!');
+              }
+          
+              try {
+                const userFromDB = await getUserByHandle(user.handle);
+                if (userFromDB) {
+                  return alert(`User {${user.handle}} already exists!`);
+                }
+                const credential = await registerUser(user.email, user.password);
+                await createUserHandle(user.handle, credential.user.uid, user.handle);
+                setAppState({ user: credential.user, userData: null });
+                navigate('/');
+              } catch (error) {
+                alert(error.message);
+              }
+            };
 
     return (<form className="register-from">
             <h2>Register Form</h2>
-              <label className="username-label">username: 
-                <input type="text" 
-                       placeholder="Enter username here..."/>
+              <label htmlFor="handle" className="username-label">username: 
+                <input type="text" name="handle" id="handle"
+                       placeholder="Enter username here..."
+                       value={user.handle} onChange={updateUser('handle')}/>
                 </label><br />
                 <br />
-                <label className="email-label">email: 
-                <input type="text" 
-                       placeholder="Enter email here..."/>
+                <label htmlFor="email" className="email-label">email: 
+                <input type="text" name="email" id="email"
+                       placeholder="Enter email here..."
+                       value={user.email} onChange={updateUser('email')}/>
                 </label><br />
                 <br />
-                <label className="password-label">password: 
-                <input type="text" 
-                       placeholder="Enter password here..."/>
+                <label htmlFor="password" className="password-label">password: 
+                <input type="password" name="password" id="password" 
+                       placeholder="Enter password here..."
+                       value={user.password} onChange={updateUser('password')}/>
                 </label><br />
                 <br />
                 <label className="confirm-password-label">confirm password: 
@@ -25,7 +64,7 @@ export default function Register(){
                        placeholder="confirm password"/>
                 </label><br />
                 <br />
-                <button>Register</button>
+                <button onClick={register}>Register</button>
                 <button>Log In</button>
         </form>);
 }

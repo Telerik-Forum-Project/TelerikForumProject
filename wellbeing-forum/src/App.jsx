@@ -10,17 +10,19 @@ import Footer from './Components/MainComponents/Footer';
 import CreatePost from '../src/Pages/PostPages/CreatePost';
 import Register from './Pages/UserPages/Register';
 import { AppContext } from './state/app.context';
-import Register from './Pages/UserPages/Register';
+import { useState } from 'react';
 
-function App() {  
 
-  const [appState, setAppState] = useState ({
-    user: null,
-    userData: null
-  });
+  function App() {  
+
+    const [appState, setAppState] = useState ({
+      user: null,
+      userData: null
+    });
 
   return (
     <>
+    <AppContext.Provider value = {{... appState, setContext: setAppState}}>
     <BrowserRouter>
     <Header />
       <Routes>
@@ -30,9 +32,13 @@ function App() {
         <Route path='/food' element={<Food />} />
         <Route path='/lifestyle' element={<Lifestyle />} />
         <Route path='/CreatePost' element={<CreatePost />} />
+        <Route path='/Register' element={<Register />} />
         
       </Routes>
     </BrowserRouter>
+
+    </AppContext.Provider>
+
       <Footer />
     </>
   )
