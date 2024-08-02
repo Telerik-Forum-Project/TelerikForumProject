@@ -1,7 +1,18 @@
-import { NavLink } from "react-router-dom"
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom"
+import { AppContext } from "../../state/app.context";
+import { logoutUser } from "../../Services/authenticate-service";
 
 export default function Header() {
-    
+
+    const { user, userData, setAppState } = useContext(AppContext);
+    const navigate = useNavigate();
+  
+    const logout = async () => {
+      await logoutUser();
+      setAppState({ user: null, userData: null });
+      navigate('/login');
+    };
     
     return (
         <>
@@ -14,8 +25,16 @@ export default function Header() {
         <NavLink to="fitness">Fitness</NavLink>
         <NavLink to="/food">Food</NavLink>
         <NavLink to="/lifestyle">Lifestyle</NavLink>
-        <NavLink to="/createPost">CreatePost</NavLink>
         <NavLink to="/register">Register</NavLink>
+        <NavLink to="/">Home</NavLink>
+        {user && (<>
+          <NavLink to="/posts">All posts</NavLink>
+          <NavLink to="/createPost">CreatePost</NavLink>
+        </>)}
+        {!user && <NavLink to="/login">Login</NavLink>}
+        {!user && <NavLink to="/register">Register</NavLink>}
+        {user && <button onClick={logout}>Logout</button>}
+        {userData && <span>Welcome, {userData.handle}</span>}
       </nav>
       </div>
       </>
