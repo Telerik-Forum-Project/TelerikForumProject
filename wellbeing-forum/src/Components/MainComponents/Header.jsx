@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom"
 import { AppContext } from "../../state/app.context";
-import { logoutUser } from "../../Services/authenticate-service";
+import { logoutUser } from "../../services/authenticate-service";
 
 export default function Header() {
 
