@@ -20,7 +20,8 @@ export default function Register(){
               })
             };
           
-            const register = async () => {
+            const register = async (e) => {
+              e.preventDefault();
               if (!user.email || !user.password) {
                 return alert('No credentials provided!');
               }

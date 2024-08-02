@@ -22,7 +22,7 @@ import { useState } from 'react';
 
   return (
     <>
-    <AppContext.Provider value = {{... appState, setContext: setAppState}}>
+    <AppContext.Provider value = {{... appState, setAppState}}>
     <BrowserRouter>
     <Header />
       <Routes>

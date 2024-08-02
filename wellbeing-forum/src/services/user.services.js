@@ -1,9 +1,11 @@
 import { get, set, ref, query, equalTo, orderByChild } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
-export const getUserByHandle = (handle) => {
+export const getUserByHandle = async (handle) => {
 
-  return get(ref(db, `users/${handle}`));
+    const snapshot = await get(ref(db, `users/${handle}`));
+
+  return snapshot.val();
 };
 
 export const createUserHandle = (handle, uid, email) => {
