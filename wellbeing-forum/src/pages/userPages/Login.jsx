@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../../state/app.context";
 import { useLocation, useNavigate } from "react-router-dom";
-import { loginUser } from "../../Services/authenticate-service";
+import { loginUser } from "../../services/authenticate-service";
 
 export default function Login() {
     const [user, setUser] = useState({
