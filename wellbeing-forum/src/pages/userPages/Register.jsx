@@ -9,6 +9,7 @@ export default function Register(){
               handle: '',
               email: '',
               password: '',
+              passwordCheck: ''
             });
             const { setAppState } = useContext(AppContext);
             const navigate = useNavigate();
@@ -24,6 +25,9 @@ export default function Register(){
               e.preventDefault();
               if (!user.email || !user.password) {
                 return alert('No credentials provided!');
+              }
+              if(user.password !== user.passwordCheck){
+                return alert("Password doesn't match");
               }
           
               try {
@@ -61,8 +65,9 @@ export default function Register(){
                 </label><br />
                 <br />
                 <label className="confirm-password-label">confirm password: 
-                <input type="text" 
-                       placeholder="confirm password"/>
+                <input type="password" 
+                       placeholder="confirm password"
+                       value={user.passwordCheck} onChange={updateUser('passwordCheck')}/>
                 </label><br />
                 <br />
                 <button onClick={register}>Register</button>
