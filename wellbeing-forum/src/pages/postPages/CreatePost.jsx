@@ -24,6 +24,12 @@ export default function CreatePost() {
             return alert('Content too short!');
         }
 
+        if (!userData || !userData.handle) {
+            return alert('User data is not available');
+        }
+
+        //тук удрям и не знам защо ?!
+
         try {
             await createPost(userData.handle, post.title, post.content);
             setPost({ title: '', content: '' });
@@ -37,7 +43,7 @@ export default function CreatePost() {
             <h1>Create Post</h1>
             <label htmlFor="title">Title: </label>
             <input value={post.title} onChange={e => updatePost('title', e.target.value)} type="text" name="title" id="title" /><br />
-            <label htmlFor="content">Comment: </label>
+            <label htmlFor="content">Content: </label>
             <textarea value={post.content} onChange={e => updatePost('content', e.target.value)} name="content" id="content" /><br /><br />
             <button onClick={handleCreatePost}>Create Post</button>
         </div>
