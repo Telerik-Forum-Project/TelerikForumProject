@@ -11,6 +11,7 @@ import CreatePost from '../src/pages/postPages/CreatePost';
 import Register from './pages/userPages/Register';
 import { AppContext } from './state/app.context';
 import { useState } from 'react';
+import Login from './pages/userPages/Login';
 
 
   function App() {  
@@ -32,6 +33,7 @@ import { useState } from 'react';
         <Route path='/food' element={<Food />} />
         <Route path='/lifestyle' element={<Lifestyle />} />
         <Route path='/CreatePost' element={<CreatePost />} />
+        <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
       </Routes>
     </BrowserRouter>
