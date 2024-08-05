@@ -18,6 +18,8 @@ import { auth } from './config/firebase-config';
 
 
 
+
+
 function App() {
   const [appState, setAppState] = useState({
     user: null,
@@ -62,3 +64,5 @@ function App() {
 }
 
 export default App
+
+//<Route path='/posts-create' element={<SinglePost />} />

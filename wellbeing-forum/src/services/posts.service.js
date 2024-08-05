@@ -10,7 +10,7 @@ export const createPost = async (author, title, content) => {
   });
 };
 
-export const getAllPost = async (search = '') => {
+export const getAllPosts = async (search = '') => {
   const snapshot = await get(ref(db, 'Posts'));
   if (!snapshot.exists()) return [];
 
