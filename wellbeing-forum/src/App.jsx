@@ -10,16 +10,34 @@ import Footer from './components/mainComponents/Footer';
 import CreatePost from '../src/pages/postPages/CreatePost';
 import Register from './pages/userPages/Register';
 import { AppContext } from './state/app.context';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Login from './pages/userPages/Login';
+import { getUserData } from './services/user.services';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './config/firebase-config';
 
 
-  function App() {  
 
-    const [appState, setAppState] = useState ({
-      user: null,
-      userData: null
-    });
+function App() {
+  const [appState, setAppState] = useState({
+    user: null,
+    userData: null,
+  });
+  const [user] = useAuthState(auth);
+
+  if (appState.user !== user) {
+    setAppState({...appState, user });
+  }
+
+  useEffect(() => {
+    if (!user) return;
+
+    getUserData(appState.user.uid)
+      .then(data => {
+        const userData = data[Object.keys(data)[0]];
+        setAppState({...appState, userData});
+      });
+  }, [user]);
 
   return (
     <>
