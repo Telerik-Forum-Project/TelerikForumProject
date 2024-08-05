@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export default function Post({ title, content, author, date, likes }) {
+export default function Post({ title, content, author, date, likes, comments }) {
 
 
     return (
@@ -11,6 +11,7 @@ export default function Post({ title, content, author, date, likes }) {
         <div>
           <span>{likes} Likes</span>
           {/* LikeButton */}
+          <span>{comments} Comments</span>
         </div>
       </div>
     );
@@ -22,4 +23,5 @@ Post.propTypes = {
     author: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
+    comments: PropTypes.number.isRequired,
 };
