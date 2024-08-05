@@ -28,8 +28,6 @@ export default function CreatePost() {
             return alert('User data is not available');
         }
 
-        //тук удрям и не знам защо ?!
-
         try {
             await createPost(userData.handle, post.title, post.content);
             setPost({ title: '', content: '' });
