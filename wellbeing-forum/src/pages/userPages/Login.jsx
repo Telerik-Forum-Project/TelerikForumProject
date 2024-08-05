@@ -18,6 +18,10 @@ export default function Login() {
         [prop]: e.target.value,
       })
     };
+
+    const handleRegisterNavigation = () => {
+      navigate('/Register');
+    };
   
   
     const login = async () => {
@@ -45,6 +49,7 @@ export default function Login() {
         <label htmlFor="password">Password: </label>
         <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br />
         <button onClick={login}>Login</button>
+        <button onClick={handleRegisterNavigation}>Register</button>
       </div>
     )
   }
