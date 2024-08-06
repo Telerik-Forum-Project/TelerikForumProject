@@ -17,7 +17,6 @@ export default function CreatePost() {
         });
     };
 
-
     const toggleTag = (tag) => {
         setPost((prevState) => ({
             ...prevState,

@@ -15,6 +15,7 @@ import Login from './pages/userPages/Login';
 import { getUserData } from './services/user.services';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config';
+import SinglePost from './pages/postPages/SinglePost';
 
 
 
@@ -52,6 +53,7 @@ function App() {
         <Route path='/fitness' element={<Fitness />} />
         <Route path='/food' element={<Food />} />
         <Route path='/lifestyle' element={<Lifestyle />} />
+        <Route path='/posts' element={<SinglePost />} />
         <Route path='/CreatePost' element={<CreatePost />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
