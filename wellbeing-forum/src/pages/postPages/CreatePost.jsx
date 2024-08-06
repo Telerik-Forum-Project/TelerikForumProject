@@ -27,6 +27,8 @@ export default function CreatePost() {
         }));
     };
 
+    //tags not adding in the db
+
     const handleCreatePost = async () => {
         if (post.title.length < 3) {
             return alert('Title too short!');
