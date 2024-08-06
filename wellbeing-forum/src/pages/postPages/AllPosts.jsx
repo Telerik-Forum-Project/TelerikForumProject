@@ -29,7 +29,7 @@ export default function AllPosts() {
       <label htmlFor="search"></label>
       <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/><br/>
       {posts.length > 0
-      ? posts.map(t => <p key={t.id}>{t.title}... <button onClick={() => navigate(`/posts/${t.id}`)}>See more</button></p>)
+      ? posts.map(p => <p key={p.id}>{p.title}... <button onClick={() => navigate(`/singlepost/${p.id}`)}>See more</button></p>)
       : 'No posts'
       }
     </div>

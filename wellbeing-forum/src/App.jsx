@@ -19,9 +19,6 @@ import SinglePost from './pages/postPages/SinglePost';
 import AllPosts from './pages/postPages/AllPosts';
 
 
-
-
-
 function App() {
   const [appState, setAppState] = useState({
     user: null,
@@ -55,8 +52,8 @@ function App() {
         <Route path='/food' element={<Food />} />
         <Route path='/lifestyle' element={<Lifestyle />} />
         <Route path='/posts' element={<AllPosts />} />
-        <Route path='/singleposts' element={<SinglePost />} />
-        <Route path='/CreatePost' element={<CreatePost />} />
+        <Route path='/singlepost/:id' element={<SinglePost />} />
+        <Route path='/createPost' element={<CreatePost />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
       </Routes>
