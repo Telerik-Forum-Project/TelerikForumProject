@@ -6,6 +6,8 @@ import { registerUser } from "../../services/authenticate-service";
 
 export default function Register() {
   const [user, setUser] = useState({
+    firstName: '',
+    lastName: '', 
     handle: '',
     email: '',
     password: '',
@@ -34,6 +36,12 @@ export default function Register() {
     if (user.password !== user.passwordCheck) {
       return alert("Password doesn't match");
     }
+    if (!user.firstName || user.firstName.length < 4 || user.firstName.length > 32){
+      return alert("Invalid first name");
+    }
+    if (!user.lastName || user.lastName.length < 4 || user.lastName.length > 32){
+      return alert("Invalid last name");
+    }
 
     try {
       const userFromDB = await getUserByHandle(user.handle);
@@ -41,7 +49,7 @@ export default function Register() {
         return alert(`User {${user.handle}} already exists!`);
       }
       const credential = await registerUser(user.email, user.password);
-      await createUserHandle(user.handle, credential.user.uid, user.email);
+      await createUserHandle(user.handle, credential.user.uid, user.email, user.firstName, user.lastName);
       setAppState({ user: credential.user, userData: null });
       navigate('/');
     } catch (error) {
@@ -51,6 +59,18 @@ export default function Register() {
 
   return (<form className="register-from">
     <h2>Register Form</h2>
+    <label htmlFor="firstName" className="firstName-label">first name:
+      <input type="text" name="firstName" id="firstName"
+        placeholder="Enter first name here..."
+        value={user.firstName} onChange={updateUser('firstName')} />
+    </label><br />
+    <br />
+    <label htmlFor="lastName" className="lastName-label">last name:
+      <input type="text" name="lastName" id="lastName"
+        placeholder="Enter last name here..."
+        value={user.lastName} onChange={updateUser('lastName')} />
+    </label><br />
+    <br />
     <label htmlFor="handle" className="username-label">username:
       <input type="text" name="handle" id="handle"
         placeholder="Enter username here..."
