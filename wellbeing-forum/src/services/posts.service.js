@@ -2,7 +2,7 @@ import { ref, push, get, update } from 'firebase/database';
 import { db } from '../config/firebase-config'
 
 export const createPost = async (author, title, content, tags) => {
-  const post = { author, title, content, createdOn: new Date().toString() ,tags};
+  const post = { author, title, content, createdOn: new Date().toString(), tags};
   const result = await push(ref(db, 'Posts'), post);
   const id = result.key;
   await update(ref(db), {

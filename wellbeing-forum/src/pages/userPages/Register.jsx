@@ -11,6 +11,7 @@ export default function Register() {
     password: '',
     passwordCheck: ''
   });
+
   const { setAppState } = useContext(AppContext);
   const navigate = useNavigate();
 
