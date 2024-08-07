@@ -11,6 +11,7 @@ import { dislikePost, likePost } from '../../services/posts.service';
  *  title: string,
  *  content: string,
  *  createdOn: string,
+ *  tags: string[]
  *  likedBy?: string[]
  * } }} props 
  * @returns 
@@ -32,9 +33,11 @@ export default function Post({ post }) {
 
   return (
     <div>
-      <h3>{post.title}</h3>
-      <p>{post.content}</p>
+      <h3>Title: {post.title}</h3>
+      <p>Comment: {post.content}</p>
+      <p>Tags: {post.tags.join(" ")}</p>
       <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
+      <p>Created by: {post.author}</p>
       <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
     </div>
   )
@@ -47,6 +50,7 @@ Post.propTypes = {
     title: PropType.string,
     content: PropType.string,
     createdOn: PropType.string,
+    tags: PropType.arrayOf(PropType.string),
     likedBy: PropType.arrayOf(PropType.string),
   })
 }
