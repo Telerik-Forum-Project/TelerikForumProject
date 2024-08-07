@@ -52,3 +52,14 @@ export const dislikePost = (handle, postId) => {
 
   return update(ref(db), updateObject);
 };
+
+export const updatePost = async (postId, updatedPost) => {
+  const postRef = ref(db, `Posts/${postId}`);
+  const snapshot = await get(postRef);
+
+  if (!snapshot.exists()) {
+    throw new Error('Post not found!');
+  }
+
+  await update(postRef, updatedPost);
+};

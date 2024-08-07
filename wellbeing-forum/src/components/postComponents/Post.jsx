@@ -1,7 +1,8 @@
 import PropType from 'prop-types';
 import { useContext } from 'react';
 import { AppContext } from '../../state/app.context';
-import { dislikePost, likePost } from '../../services/posts.service';
+import { dislikePost, likePost, updatePost } from '../../services/posts.service';
+import { useState } from 'react';
 
 /**
  * 
@@ -18,6 +19,13 @@ import { dislikePost, likePost } from '../../services/posts.service';
  */
 export default function Post({ post }) {
   const { userData } = useContext(AppContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValues, setEditValues] = useState({
+    title: post.title,
+    content: post.content,
+    tags: post.tags.join(', '),
+  });
+
   const toggleLike = async () => {
     const isLiked = post.likedBy.includes(userData.handle);
     try {
@@ -31,16 +39,80 @@ export default function Post({ post }) {
     }
   };
 
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditValues({
+      ...editValues,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const updatedPost = {
+      ...post,
+      title: editValues.title,
+      content: editValues.content,
+      tags: editValues.tags.split(',').map(tag => tag.trim()),
+    };
+    try {
+      await updatePost(post.id, updatedPost);
+      setIsEditing(false);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <div>
-      <h3>Title: {post.title}</h3>
-      <p>Comment: {post.content}</p>
-      <p>Tags: {post.tags.join(" ")}</p>
-      <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
-      <p>Created by: {post.author}</p>
-      <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
+      {isEditing ? (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Title:</label>
+            <input
+              type="text"
+              name="title"
+              value={editValues.title}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Content:</label>
+            <textarea
+              name="content"
+              value={editValues.content}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>Tags (comma separated):</label>
+            <input
+              type="text"
+              name="tags"
+              value={editValues.tags}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit">Save</button>
+          <button type="button" onClick={toggleEdit}>Cancel</button>
+        </form>
+      ) : (
+        <>
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
+          <p>Tags: {post.tags.join(' ')}</p>
+          <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
+          <p>Created by: {post.author}</p>
+          <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
+          <button onClick={toggleEdit}>Edit</button>
+        </>
+      )}
     </div>
-  )
+  );
 }
 
 Post.propTypes = {
@@ -56,6 +128,17 @@ Post.propTypes = {
 }
 
 
+
+// return (
+//   <div>
+//     <h3>Title: {post.title}</h3>
+//     <p>Comment: {post.content}</p>
+//     <p>Tags: {post.tags.join(" ")}</p>
+//     <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
+//     <p>Created by: {post.author}</p>
+//     <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
+//   </div>
+// )
 
 // import PropTypes from 'prop-types'
 
