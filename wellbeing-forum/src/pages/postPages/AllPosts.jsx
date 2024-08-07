@@ -14,7 +14,6 @@ export default function AllPosts() {
     getAllPosts(search)
       .then(posts => setPosts(posts))
       .catch(error => alert(error.message));
- 
   }, [search]);
 
   const setSearch = (value) => {

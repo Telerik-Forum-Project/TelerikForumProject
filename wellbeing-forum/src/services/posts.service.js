@@ -17,7 +17,7 @@ export const getAllPosts = async (search = '') => {
   const posts = Object.values(snapshot.val());
 
   if (search) {
-    return posts.filter(t => t.title.toLowerCase().includes(search.toLowerCase()));
+    return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
   }
 
   return posts;

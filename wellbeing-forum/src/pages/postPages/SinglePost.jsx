@@ -9,7 +9,7 @@ export default function SinglePost() {
     const { id } = useParams();
   
     useEffect(() => {
-      return onValue(ref(db, `posts/${id}`), snapshot => {
+      return onValue(ref(db, `Posts/${id}`), snapshot => {
         const updatedPost = snapshot.val();
         setPost({
           ...updatedPost,
@@ -21,7 +21,7 @@ export default function SinglePost() {
     return (
       <div>
         <h1>Single post</h1>
-        { post && <Post Post={post}/> }
+        { post && <Post post={post}/> }
       </div>
     )
   }
