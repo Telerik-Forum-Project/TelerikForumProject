@@ -29,11 +29,17 @@ export default function CreatePost() {
     //tags not adding in the db
 
     const handleCreatePost = async () => {
-        if (post.title.length < 3) {
+        if (post.title.length >= 16) {
             return alert('Title too short!');
         }
-        if (post.content.length < 3) {
-            return alert('Content too short!');
+        if (post.title.length < 64) {
+            return alert('Title too long!');
+        }
+        if (post.content.length > 32) {
+            return alert('Comment too short!');
+        }
+        if (post.content.length < 8192) {
+            return alert('Comment too long!');
         }
 
         if (post.tags.length === 0) {
@@ -75,41 +81,3 @@ export default function CreatePost() {
         </div>
     )
 }
-
-
-// import { useState } from "react";
-
-// export default function CreatePost() {
-
-//     const [newTopicName, setNewTopicName] = useState("");
-//     const [newTopicDescription, setNewTopicDescription] = useState("");
-
-//     function handleInputTopicChange(e) {
-//         setNewTopicName(e.target.value);
-//     }
-
-//     function handleInputDescriptionChange(e) {
-//         setNewTopicDescription(e.target.value);
-//     }
-
-
-//     return (<>
-//         <form>
-//             <h2>Create Post</h2>
-//             <label className="title-label">Title:
-//                 <input type="text"
-//                        placeholder="Enter title here..."
-//                        value={newTopicName}
-//                        onChange={handleInputTopicChange}/>
-//             </label><br />
-//             <br />
-//             <label className="comment-label">Description:
-//                 <textarea type="text"
-//                           placeholder="Enter description here..."
-//                           value={newTopicDescription}
-//                           onChange={handleInputDescriptionChange}/>
-//             </label><br />
-//             <button>Create new Post</button>
-//         </form>
-//     </>);
-// }

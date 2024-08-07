@@ -17,7 +17,7 @@ export const getAllPosts = async (search = '') => {
   const posts = Object.values(snapshot.val());
 
   if (search) {
-    return posts.filter(t => t.title.toLowerCase().includes(search.toLowerCase()));
+    return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
   }
 
   return posts;
@@ -51,4 +51,15 @@ export const dislikePost = (handle, postId) => {
   };
 
   return update(ref(db), updateObject);
+};
+
+export const updatePost = async (postId, updatedPost) => {
+  const postRef = ref(db, `Posts/${postId}`);
+  const snapshot = await get(postRef);
+
+  if (!snapshot.exists()) {
+    throw new Error('Post not found!');
+  }
+
+  await update(postRef, updatedPost);
 };

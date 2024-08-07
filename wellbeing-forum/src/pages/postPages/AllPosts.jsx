@@ -14,7 +14,6 @@ export default function AllPosts() {
     getAllPosts(search)
       .then(posts => setPosts(posts))
       .catch(error => alert(error.message));
- 
   }, [search]);
 
   const setSearch = (value) => {
@@ -26,10 +25,10 @@ export default function AllPosts() {
   return (
     <div>
       <h1>Posts:</h1>
-      <label htmlFor="search"></label>
+      <label htmlFor="search">Search </label>
       <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br/><br/>
       {posts.length > 0
-      ? posts.map(p => <p key={p.id}>{p.title}... <button onClick={() => navigate(`/singlepost/${p.id}`)}>See more</button></p>)
+      ? posts.map(p => <li key={p.id}>Title: {p.title}<button onClick={() => navigate(`/singlepost/${p.id}`)}>read more</button></li>)
       : 'No posts'
       }
     </div>
