@@ -21,56 +21,52 @@ import useAdmin from './hooks/useAdmin';
 import AdminPanel from './components/adminComponents/AdminPanel';
 import EditUser from './pages/userPages/EditUser';
 
-
 function App() {
   const [appState, setAppState] = useState({
     user: null,
     userData: null,
   });
   const [user] = useAuthState(auth);
-
-  if (appState.user !== user) {
-    setAppState({...appState, user });
-  }
-
   const { isAdminUser, loading } = useAdmin();
 
   useEffect(() => {
-    if (!user) return;
+    if (user) {
+      setAppState(prevState => ({ ...prevState, user }));
+    }
+  }, [user]);
 
-    getUserData(appState.user.uid)
-      .then(data => {
-        const userData = data[Object.keys(data)[0]];
-        setAppState({...appState, userData});
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid).then(data => {
+        const userData = data ? data[Object.keys(data)[0]] : null;
+        setAppState(prevState => ({ ...prevState, userData }));
       });
+    }
   }, [user]);
 
   return (
-    <>
-    <AppContext.Provider value = {{... appState, setAppState}}>
-    <BrowserRouter>
-    <Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/fitness' element={<Fitness />} />
-        <Route path='/food' element={<Food />} />
-        <Route path='/lifestyle' element={<Lifestyle />} />
-        <Route path='/posts' element={<AllPosts />} />
-        <Route path='/singlepost/:id' element={<SinglePost />} />
-        <Route path='/createPost' element={<CreatePost />} />
-        <Route path='/Login' element={<Login />} />
-        <Route path='/Register' element={<Register />} />
-        <Route path='edituser' element={<EditUser />} />
-      </Routes>
-      {!loading && isAdminUser && <AdminPanel />}
-      <Footer />
-    </BrowserRouter>
+    <AppContext.Provider value={{ ...appState, setAppState }}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/fitness' element={<Fitness />} />
+          <Route path='/food' element={<Food />} />
+          <Route path='/lifestyle' element={<Lifestyle />} />
+          <Route path='/posts' element={<AllPosts />} />
+          <Route path='/singlepost/:id' element={<SinglePost />} />
+          <Route path='/createPost' element={<CreatePost />} />
+          <Route path='/Login' element={<Login />} />
+          <Route path='/Register' element={<Register />} />
+          <Route path='edituser' element={<EditUser />} />
+        </Routes>
+        {!loading && isAdminUser && <AdminPanel />}
+        <Footer />
+      </BrowserRouter>
     </AppContext.Provider>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
 
-//<Route path='/posts-create' element={<SinglePost />} />

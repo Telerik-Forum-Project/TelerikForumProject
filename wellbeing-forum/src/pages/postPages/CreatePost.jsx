@@ -29,6 +29,10 @@ export default function CreatePost() {
     //tags not adding in the db
 
     const handleCreatePost = async () => {
+        if (userData.isBlocked) {
+            return alert('You are blocked from creating posts.');
+        }
+
         if (post.title.length < 16) {
             return alert('Title too short!');
         }
