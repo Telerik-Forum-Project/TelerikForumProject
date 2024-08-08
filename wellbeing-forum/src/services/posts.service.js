@@ -29,9 +29,17 @@ export const getPostById = async (id) => {
     throw new Error('Post not found!');
   }
 
+  const postData = snapshot.val();
+  const commentsArray = postData.comments
+    ? Object.values(postData.comments).map(comment => ({
+        ...comment,
+      }))
+    : [];
+
   return {
-    ...snapshot.val(),
-    likedBy: Object.keys(snapshot.val().likedBy ?? {}),
+    ...postData,
+    likedBy: Object.keys(postData.likedBy ?? {}),
+    comments: commentsArray,
   };
 };
 
@@ -67,4 +75,9 @@ export const updatePost = async (postId, updatedPost) => {
 export const deletePost = async (postId) => {
   const postRef = ref(db, `Posts/${postId}`);
   await remove(postRef);
+};
+
+export const addCommentToPost = async (postId, comment) => {
+  const commentRef = ref(db, `Posts/${postId}/comments`);
+  await push(commentRef, comment);
 };
