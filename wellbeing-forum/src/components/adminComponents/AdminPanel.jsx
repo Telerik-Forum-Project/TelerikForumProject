@@ -11,6 +11,7 @@ export default function AdminPanel() {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [isPanelOpen, setIsPanelOpen] = useState(true);
 
   useEffect(() => {
     if (searchQuery) {
@@ -48,6 +49,8 @@ export default function AdminPanel() {
     setFilteredPosts(filteredPosts.filter(post => post.id !== postId));
   };
 
+  const togglePanel = () => setIsPanelOpen(!isPanelOpen);
+
   if (loading) {
     return null; 
   }
@@ -57,48 +60,60 @@ export default function AdminPanel() {
   }
 
   return (
-    <div className="admin-popup">
-      <h4>Admin Panel</h4>
-      <div>
-        <h3>Search Users</h3>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search by username, last name, or name"
-        />
-        {searchQuery && (
-          <ul>
-            {users.map(user => (
-              <li key={user.handle}>
-                {user.firstName} {user.lastName} - {user.email}
-                <button onClick={() => handleBlockUser(user.handle, !user.isBlocked)}>
-                  {user.isBlocked ? 'Unblock' : 'Block'}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <div>
-        <h3>Search Posts</h3>
-        <input
-          type="text"
-          value={postSearchQuery}
-          onChange={handlePostSearchChange}
-          placeholder="Search by post title"
-        />
-        {postSearchQuery && (
-          <ul>
-            {filteredPosts.map(post => (
-              <li key={post.id}>
-                {post.title} - {post.author}
-                <button onClick={() => handleDeletePost(post.id)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+    <>
+      {isPanelOpen && (
+        <div className="admin-popup">
+          <button className="admin-panel-toggle" onClick={togglePanel}>
+            Close Panel
+          </button>
+          <h4>Admin Panel</h4>
+          <div>
+            <h3>Search Users</h3>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search by username, last name, or name"
+            />
+            {searchQuery && (
+              <ul>
+                {users.map(user => (
+                  <li key={user.handle}>
+                    {user.firstName} {user.lastName} - {user.email}
+                    <button onClick={() => handleBlockUser(user.handle, !user.isBlocked)}>
+                      {user.isBlocked ? 'Unblock' : 'Block'}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div>
+            <h3>Search Posts</h3>
+            <input
+              type="text"
+              value={postSearchQuery}
+              onChange={handlePostSearchChange}
+              placeholder="Search by post title"
+            />
+            {postSearchQuery && (
+              <ul>
+                {filteredPosts.map(post => (
+                  <li key={post.id}>
+                    {post.title} - {post.author}
+                    <button onClick={() => handleDeletePost(post.id)}>Delete</button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
+      {!isPanelOpen && (
+        <button className="admin-panel-open" onClick={togglePanel}>
+          Open Admin Panel
+        </button>
+      )}
+    </>
   );
 }

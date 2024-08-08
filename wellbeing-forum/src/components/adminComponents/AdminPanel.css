@@ -1,50 +1,51 @@
-/* Ensure this file is imported into your component file */
-
 .admin-popup {
-    position: fixed; /* Fixes the position relative to the viewport */
-    bottom: 20px; /* Distance from the bottom of the viewport */
-    right: 20px; /* Distance from the right side of the viewport */
-    width: 300px; /* Width of the popup */
-    padding: 20px; /* Padding inside the popup */
-    background-color: white; /* Background color */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    z-index: 1000; /* Ensure the popup is above other content */
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 15px;
+    z-index: 1000; /* Ensure it’s on top of other content */
   }
   
-  .admin-popup h1, .admin-popup h2 {
-    margin: 0 0 10px 0; /* Margin around headers */
+  .admin-panel-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it’s on top of the panel content */
   }
   
-  .admin-popup input[type="text"] {
-    width: 100%; /* Full width input */
-    padding: 8px; /* Padding inside the input */
-    margin-bottom: 10px; /* Space below the input */
-    border: 1px solid #ddd; /* Border color */
-    border-radius: 4px; /* Rounded corners for input */
+  .admin-panel-toggle:hover {
+    background-color: #c82333;
   }
   
-  .admin-popup ul {
-    list-style-type: none; /* Remove default list styling */
-    padding: 0; /* Remove default padding */
+  .admin-panel-open {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it’s on top of other content */
   }
   
-  .admin-popup li {
-    margin-bottom: 10px; /* Space between list items */
-  }
-  
-  .admin-popup button {
-    background-color: #007bff; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* Remove default border */
-    padding: 8px 12px; /* Padding inside the button */
-    border-radius: 4px; /* Rounded corners for button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 14px; /* Font size */
-  }
-  
-  .admin-popup button:hover {
-    background-color: #0056b3; /* Darker button color on hover */
+  .admin-panel-open:hover {
+    background-color: #0056b3;
   }
   
