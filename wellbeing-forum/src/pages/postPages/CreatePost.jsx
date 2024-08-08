@@ -29,16 +29,19 @@ export default function CreatePost() {
     //tags not adding in the db
 
     const handleCreatePost = async () => {
-        if (post.title.length >= 16) {
+        if (post.title.length < 16) {
             return alert('Title too short!');
         }
-        if (post.title.length < 64) {
+        
+        if (post.title.length > 64) {
             return alert('Title too long!');
         }
-        if (post.content.length > 32) {
+
+        if (post.content.length < 32) {
             return alert('Comment too short!');
         }
-        if (post.content.length < 8192) {
+
+        if (post.content.length > 8192) {
             return alert('Comment too long!');
         }
 

@@ -1,8 +1,9 @@
 import PropType from 'prop-types';
 import { useContext } from 'react';
 import { AppContext } from '../../state/app.context';
-import { dislikePost, likePost, updatePost } from '../../services/posts.service';
+import { dislikePost, likePost, updatePost, deletePost } from '../../services/posts.service';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 
@@ -25,6 +26,8 @@ export default function Post({ post }) {
     content: post.content,
     tags: post.tags.join(', '),
   });
+
+  const navigate = useNavigate(); 
 
   const toggleLike = async () => {
     const isLiked = post.likedBy.includes(userData.handle);
@@ -67,6 +70,17 @@ export default function Post({ post }) {
     }
   };
 
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      try {
+        await deletePost(post.id);
+        navigate('/posts');
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
+
   return (
     <div>
       {isEditing ? (
@@ -99,16 +113,18 @@ export default function Post({ post }) {
           </div>
           <button type="submit">Save</button>
           <button type="button" onClick={toggleEdit}>Cancel</button>
+          <button type="button" onClick={handleDelete}>Delete</button>
         </form>
       ) : (
         <>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
+          <h3>Title: {post.title}</h3>
+          <p>Comment: {post.content}</p>
           <p>Tags: {post.tags.join(' ')}</p>
           <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
           <p>Created by: {post.author}</p>
           <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
           <button onClick={toggleEdit}>Edit</button>
+          <button>Comment</button>
         </>
       )}
     </div>
