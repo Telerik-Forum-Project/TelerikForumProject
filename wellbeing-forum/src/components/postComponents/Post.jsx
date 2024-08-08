@@ -156,7 +156,14 @@ export default function Post({ post }) {
           <h3>Title: {post.title}</h3>
           <p>Content: {post.content}</p>
           <p>Tags: {post.tags.join(' ')}</p>
-          <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
+          <p>Created on: {new Date(post.createdOn).toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: false})}</p>
           <p>Created by: {post.author}</p>
           <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
           <button onClick={toggleEdit}>Edit</button>
@@ -164,8 +171,17 @@ export default function Post({ post }) {
           {comments.length > 0 ? (
             comments.map((comment, index) => (
               <div key={index}>
-                <p>Posted by: {comment.author}: Comment:{comment.content}</p>
-                <p>on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {hour12: false})}</p>
+                <p>Posted by: {comment.author}</p>
+                <p>Comment: {comment.content}</p>
+                <p>on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: false})}</p>
+                  <br/>
               </div>
             ))
           ) : (
