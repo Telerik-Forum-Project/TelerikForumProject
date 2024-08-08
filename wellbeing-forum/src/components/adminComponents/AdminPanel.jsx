@@ -11,7 +11,7 @@ export default function AdminPanel() {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [isPanelOpen, setIsPanelOpen] = useState(true);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   useEffect(() => {
     if (searchQuery) {
@@ -111,7 +111,7 @@ export default function AdminPanel() {
       )}
       {!isPanelOpen && (
         <button className="admin-panel-open" onClick={togglePanel}>
-          Open Admin Panel
+          Open
         </button>
       )}
     </>
