@@ -3,7 +3,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase-config';
 import PropTypes from 'prop-types'
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthManager = ({ children }) => {
   const [user, setUser] = useState(null);

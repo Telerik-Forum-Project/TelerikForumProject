@@ -17,6 +17,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config';
 import SinglePost from './pages/postPages/SinglePost';
 import AllPosts from './pages/postPages/AllPosts';
+import useAdmin from './hooks/useAdmin';
+import AdminPanel from './components/adminComponents/AdminPanel';
 
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
   if (appState.user !== user) {
     setAppState({...appState, user });
   }
+
+  const { isAdminUser, loading } = useAdmin();
 
   useEffect(() => {
     if (!user) return;
@@ -57,9 +61,10 @@ function App() {
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
       </Routes>
+      {!loading && isAdminUser && <AdminPanel />}
+      <Footer />
     </BrowserRouter>
     </AppContext.Provider>
-      <Footer />
     </>
   )
 }

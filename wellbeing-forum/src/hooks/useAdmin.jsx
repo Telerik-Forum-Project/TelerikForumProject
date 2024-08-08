@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { isAdmin } from '../services/user.services';
+import useAuth from '../hooks/useAuth';
+import { isAdmin } from '../services/admin.services';
 
 export default function useAdmin() {
   const [isAdminUser, setIsAdminUser] = useState(false);
@@ -8,15 +8,17 @@ export default function useAdmin() {
   const { user } = useAuth();
 
   useEffect(() => {
-    const checkAdminStatus = async () => {
-      if (user) {
+    if (user) {
+      const checkAdminStatus = async () => {
         const adminStatus = await isAdmin(user.uid);
         setIsAdminUser(adminStatus);
-      }
+        setLoading(false);
+      };
+      checkAdminStatus();
+    } else {
+      setIsAdminUser(false);
       setLoading(false);
-    };
-
-    checkAdminStatus();
+    }
   }, [user]);
 
   return { isAdminUser, loading };

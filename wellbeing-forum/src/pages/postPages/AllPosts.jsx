@@ -8,8 +8,6 @@ export default function AllPosts() {
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') ?? '';
 
-  console.log(posts);
-
   useEffect(() => {
     getAllPosts(search)
       .then(posts => setPosts(posts))
