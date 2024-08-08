@@ -19,6 +19,7 @@ import SinglePost from './pages/postPages/SinglePost';
 import AllPosts from './pages/postPages/AllPosts';
 import useAdmin from './hooks/useAdmin';
 import AdminPanel from './components/adminComponents/AdminPanel';
+import EditUser from './pages/userPages/EditUser';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         <Route path='/createPost' element={<CreatePost />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
+        <Route path='edituser' element={<EditUser />} />
       </Routes>
       {!loading && isAdminUser && <AdminPanel />}
       <Footer />

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom"
 import { AppContext } from "../../state/app.context";
-import { logoutUser } from "../../services/authenticate-service";
+import { logoutUser } from "../../services/authenticate-service"
 
 export default function Header() {
 
@@ -14,9 +14,13 @@ export default function Header() {
       navigate('/login');
     };
     
+    const editUser = () => {
+      navigate('edituser');
+    }
+
     return (
         <>
-        <div id="header-div">
+        <div className="header-div">
       <h1>Fitness Food and Lifestyle</h1>
       <nav>
         <NavLink to="/">Home</NavLink>
@@ -32,6 +36,7 @@ export default function Header() {
         {!user && <NavLink to="/register">Register</NavLink>}
         {user && <button onClick={logout}>Logout</button>}
         {userData && <span>Welcome, {userData.handle}</span>}
+        {user && <button onClick={editUser}>{userData.handle}</button>}
       </nav>
       </div>
       </>
