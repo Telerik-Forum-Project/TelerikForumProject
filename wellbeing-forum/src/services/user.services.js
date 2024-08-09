@@ -62,6 +62,25 @@ export const searchUsers = async (search = '') => {
   }
 }
 
+export const updateUserData = async (uid, updatedData) => {
+  try {
+    const userRef = query(ref(db, 'users'), orderByChild('uid'), equalTo(uid));
+    const snapshot = await get(userRef);
+
+    if (snapshot.exists()) {
+      const userKey = Object.keys(snapshot.val())[0];
+
+      await update(ref(db, `users/${userKey}`), updatedData);
+
+      console.log(`User ${userKey} data updated successfully.`);
+    } else {
+      console.error('User does not exist');
+    }
+  } catch (error) {
+    console.error(`Failed to update user data: ${error}`);
+  }
+};
+
 
 // export const createUserHandle = (handle, uid, email) => {
 

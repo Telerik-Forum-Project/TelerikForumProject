@@ -14,8 +14,8 @@ export default function Header() {
       navigate('/login');
     };
     
-    const editUser = () => {
-      navigate('edituser');
+    const detailUser = () => {
+      navigate('userdetails');
     }
 
     return (
@@ -36,7 +36,7 @@ export default function Header() {
         {!user && <NavLink to="/register">Register</NavLink>}
         {user && <button onClick={logout}>Logout</button>}
         {userData && <span>Welcome, {userData.handle}</span>}
-        {userData && <button onClick={editUser}>{userData.handle}</button>}
+        {userData && <button onClick={detailUser}>{userData.handle}</button>}
       </nav>
       </div>
       </>
