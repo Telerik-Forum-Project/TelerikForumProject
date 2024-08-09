@@ -39,10 +39,10 @@ export default function Post({ post }) {
     const fetchComments = async () => {
       try {
         const updatedPost = await getPostById(post.id);
-        setComments(updatedPost.comments || []); // Ensure comments is an array
+        setComments(updatedPost.comments || []); 
       } catch (error) {
         console.error("Failed to fetch comments:", error);
-        setComments([]); // Fallback to an empty array in case of error
+        setComments([]); 
       }
     };
   
@@ -166,7 +166,9 @@ export default function Post({ post }) {
                   hour12: false})}</p>
           <p>Created by: {post.author}</p>
           <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
-          <button onClick={toggleEdit}>Edit</button>
+          {userData.handle === post.author && (
+            <button onClick={toggleEdit}>Edit</button>
+          )}
           <h4>Comments:</h4>
           {comments.length > 0 ? (
             comments.map((comment, index) => (
