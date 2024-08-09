@@ -20,6 +20,7 @@ import AllPosts from './pages/postPages/AllPosts';
 import useAdmin from './hooks/useAdmin';
 import AdminPanel from './components/adminComponents/AdminPanel';
 import EditUser from './pages/userPages/EditUser';
+import UserDetails from './pages/userPages/UserDetails';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -59,7 +60,8 @@ function App() {
           <Route path='/createPost' element={<CreatePost />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Register' element={<Register />} />
-          <Route path='edituser' element={<EditUser />} />
+          <Route path='/userdetails/edituser' element={<EditUser />} />
+          <Route path='/userdetails' element={<UserDetails />} />
         </Routes>
         {!loading && isAdminUser && <AdminPanel />}
         <Footer />
