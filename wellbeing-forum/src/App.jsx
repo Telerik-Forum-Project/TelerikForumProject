@@ -20,6 +20,8 @@ import AllPosts from './pages/postPages/AllPosts';
 import useAdmin from './hooks/useAdmin';
 import AdminPanel from './components/adminComponents/AdminPanel';
 import EditUser from './pages/userPages/EditUser';
+import MostCommented10Posts from './pages/postPages/MostCommented10Posts';
+import Top10RecentPosts from './pages/postPages/Top10RecentPosts';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -59,6 +61,8 @@ function App() {
           <Route path='/createPost' element={<CreatePost />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Register' element={<Register />} />
+          <Route path='/mostCommented' element={<MostCommented10Posts/>} />
+          <Route path='/mostRecent' element={<Top10RecentPosts />} />
           <Route path='edituser' element={<EditUser />} />
         </Routes>
         {!loading && isAdminUser && <AdminPanel />}
