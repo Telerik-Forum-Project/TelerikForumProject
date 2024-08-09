@@ -5,23 +5,51 @@ import { db } from "../../config/firebase-config";
 import Post from "../../components/postComponents/Post";
 
 export default function SinglePost() {
-    const [post, setPost] = useState(null);
-    const { id } = useParams();
-  
-    useEffect(() => {
-      return onValue(ref(db, `Posts/${id}`), snapshot => {
-        const updatedPost = snapshot.val();
+  const [post, setPost] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const postRef = ref(db, `Posts/${id}`);
+    const unsubscribe = onValue(postRef, snapshot => {
+      const updatedPost = snapshot.val();
+      if (updatedPost) {
         setPost({
           ...updatedPost,
           likedBy: Object.keys(updatedPost.likedBy ?? {}),
+          comments: Array.isArray(updatedPost.comments) ? updatedPost.comments : [],
         });
-      });
-    }, [id]);
+      }
+    });
+
   
-    return (
-      <div>
-        <h1>Single post</h1>
-        { post && <Post post={post}/> }
-      </div>
-    )
-  }
+    return () => unsubscribe();
+  }, [id]);
+
+  return (
+    <div>
+      <h1>Single Post</h1>
+      {post ? <Post post={post} /> : <p>Loading...</p>}
+    </div>
+  );
+}
+
+
+//old file trying to fix an issue 
+
+// useEffect(() => {
+//   return onValue(ref(db, Posts/${id}), snapshot => {
+//     const updatedPost = snapshot.val();
+//     setPost({
+//       ...updatedPost,
+//       likedBy: Object.keys(updatedPost.likedBy ?? {}),
+//     });
+//   });
+// }, [id]);
+
+// return (
+//   <div>
+//     <h1>Single post</h1>
+//     { post && <Post post={post}/> }
+//   </div>
+// )
+// }

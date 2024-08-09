@@ -32,7 +32,10 @@ export const getPostById = async (id) => {
   const postData = snapshot.val();
   const commentsArray = postData.comments
     ? Object.values(postData.comments).map(comment => ({
-        ...comment,
+        id: comment.id,
+        author: comment.author,
+        content: comment.content,
+        createdOn: comment.createdOn
       }))
     : [];
 
