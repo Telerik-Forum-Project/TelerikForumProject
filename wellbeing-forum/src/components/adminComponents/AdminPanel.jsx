@@ -73,7 +73,7 @@ export default function AdminPanel() {
               type="text"
               value={searchQuery}
               onChange={handleSearchChange}
-              placeholder="Search by username, last name, or name"
+              placeholder="Search by username, last name or name"
             />
             {searchQuery && (
               <ul>
