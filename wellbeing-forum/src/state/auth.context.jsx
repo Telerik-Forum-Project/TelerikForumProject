@@ -20,10 +20,11 @@ export const AuthManager = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, loading }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
+
 
 AuthManager.propTypes = {
   children: PropTypes.node.isRequired,

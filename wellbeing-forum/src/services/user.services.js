@@ -1,5 +1,5 @@
 import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
-import { db } from '../config/firebase-config';
+import { db, auth } from '../config/firebase-config';
 
 export const getUserByHandle = async (handle) => {
   const snapshot = await get(ref(db, `users/${handle}`));
@@ -79,6 +79,10 @@ export const updateUserData = async (uid, updatedData) => {
   } catch (error) {
     console.error(`Failed to update user data: ${error}`);
   }
+};
+
+export const getCurrentUser = () => {
+  return auth.currentUser;
 };
 
 

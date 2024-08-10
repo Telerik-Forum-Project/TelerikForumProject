@@ -9,7 +9,7 @@ import Lifestyle from '../src/pages/mainPages/Lifestyle';
 import Footer from './components/mainComponents/Footer';
 import CreatePost from '../src/pages/postPages/CreatePost';
 import Register from './pages/userPages/Register';
-import { AppContext } from './state/app.context';
+import { AppContext } from './state/app.context.jsx';
 import { useState, useEffect } from 'react';
 import Login from './pages/userPages/Login';
 import { getUserData } from './services/user.services';
