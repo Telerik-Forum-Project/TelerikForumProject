@@ -32,7 +32,10 @@ export const getPostById = async (id) => {
   const postData = snapshot.val();
   const commentsArray = postData.comments
     ? Object.values(postData.comments).map(comment => ({
-        ...comment,
+        id: comment.id,
+        author: comment.author,
+        content: comment.content,
+        createdOn: comment.createdOn
       }))
     : [];
 
@@ -80,4 +83,13 @@ export const deletePost = async (postId) => {
 export const addCommentToPost = async (postId, comment) => {
   const commentRef = ref(db, `Posts/${postId}/comments`);
   await push(commentRef, comment);
+};
+
+export const sortPostsByCommentCount = (posts) => {
+  return posts
+    .map(post => ({
+      ...post,
+      commentCount: post.comments ? Object.keys(post.comments).length : 0,
+    }))
+    .sort((a, b) => b.commentCount - a.commentCount);
 };

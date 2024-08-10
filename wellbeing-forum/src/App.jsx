@@ -20,6 +20,8 @@ import AllPosts from './pages/postPages/AllPosts';
 import useAdmin from './hooks/useAdmin';
 import AdminPanel from './components/adminComponents/AdminPanel';
 import EditUser from './pages/userPages/EditUser';
+import MostCommented10Posts from './pages/postPages/MostCommented10Posts';
+import Top10RecentPosts from './pages/postPages/Top10RecentPosts';
 import UserDetails from './pages/userPages/UserDetails';
 
 function App() {
@@ -60,6 +62,8 @@ function App() {
           <Route path='/createPost' element={<CreatePost />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Register' element={<Register />} />
+          <Route path='/mostCommented' element={<MostCommented10Posts/>} />
+          <Route path='/mostRecent' element={<Top10RecentPosts />} />
           <Route path='/userdetails/edituser' element={<EditUser />} />
           <Route path='/userdetails' element={<UserDetails />} />
         </Routes>

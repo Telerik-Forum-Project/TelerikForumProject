@@ -1,4 +1,4 @@
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { AppContext } from '../../state/app.context';
 import { dislikePost, likePost, updatePost, deletePost, addCommentToPost } from '../../services/posts.service';
@@ -39,10 +39,10 @@ export default function Post({ post }) {
     const fetchComments = async () => {
       try {
         const updatedPost = await getPostById(post.id);
-        setComments(updatedPost.comments || []); // Ensure comments is an array
+        setComments(updatedPost.comments || []); 
       } catch (error) {
         console.error("Failed to fetch comments:", error);
-        setComments([]); // Fallback to an empty array in case of error
+        setComments([]); 
       }
     };
   
@@ -50,6 +50,11 @@ export default function Post({ post }) {
   }, [post.id]);
 
   const toggleLike = async () => {
+    if (!userData || !userData.handle) {
+      alert('User is not logged in.');
+      return;
+    }
+
     const isLiked = post.likedBy.includes(userData.handle);
     try {
       if (isLiked) {
@@ -103,6 +108,17 @@ export default function Post({ post }) {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+
+    if (comment.trim() === '') {
+      alert('Comment cannot be empty');
+      return;
+    }
+
+    if (!userData || !userData.handle) {
+      alert('User is not logged in.');
+      return;
+    }
+
     const newComment = {
       author: userData.handle,
       content: comment,
@@ -166,7 +182,9 @@ export default function Post({ post }) {
                   hour12: false})}</p>
           <p>Created by: {post.author}</p>
           <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
-          <button onClick={toggleEdit}>Edit</button>
+          {userData.handle === post.author && (
+            <button onClick={toggleEdit}>Edit</button>
+          )}
           <h4>Comments:</h4>
           {comments.length > 0 ? (
             comments.map((comment, index) => (
@@ -206,58 +224,19 @@ export default function Post({ post }) {
 }
 
 Post.propTypes = {
-  post: PropType.shape({
-    id: PropType.string.isRequired,
-    author: PropType.string.isRequired,
-    title: PropType.string.isRequired,
-    content: PropType.string.isRequired,
-    createdOn: PropType.string.isRequired,
-    tags: PropType.arrayOf(PropType.string).isRequired,
-    likedBy: PropType.arrayOf(PropType.string),
-    comments: PropType.arrayOf(PropType.shape({
-      id: PropType.string,
-      author: PropType.string.isRequired,
-      content: PropType.string.isRequired,
-      createdOn: PropType.string.isRequired,
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    createdOn: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    likedBy: PropTypes.arrayOf(PropTypes.string),
+    comments: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      createdOn: PropTypes.string.isRequired,
     })),
   }).isRequired,
 };
-
-
-
-// return (
-//   <div>
-//     <h3>Title: {post.title}</h3>
-//     <p>Comment: {post.content}</p>
-//     <p>Tags: {post.tags.join(" ")}</p>
-//     <p>Created on: {new Date(post.createdOn).toLocaleDateString()}</p>
-//     <p>Created by: {post.author}</p>
-//     <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
-//   </div>
-// )
-
-// import PropTypes from 'prop-types'
-
-// export default function Post({ title, content, author, date, likes }) {
-
-
-//     return (
-//       <div className="post">
-//         <h2>{title}</h2>
-//         <p>{content}</p>
-//         <small>Posted by {author} on {date}</small>
-//         <div>
-//           <span>{likes} Likes</span>
-//           {/* LikeButton */}
-//         </div>
-//       </div>
-//     );
-//   }
-
-// Post.propTypes = {
-//     title: PropTypes.string.isRequired,
-//     content: PropTypes.string.isRequired,
-//     author: PropTypes.string.isRequired,
-//     date: PropTypes.string.isRequired,
-//     likes: PropTypes.number.isRequired,
-// };
