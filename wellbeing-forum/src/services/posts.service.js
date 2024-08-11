@@ -14,7 +14,10 @@ export const getAllPosts = async (search = '') => {
   const snapshot = await get(ref(db, 'Posts'));
   if (!snapshot.exists()) return [];
 
-  const posts = Object.values(snapshot.val());
+  const posts = Object.values(snapshot.val()).map(post => ({
+    ...post,
+    likeCount: post.likedBy ? Object.keys(post.likedBy).length : 0,
+  }));
 
   if (search) {
     return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
@@ -22,6 +25,19 @@ export const getAllPosts = async (search = '') => {
 
   return posts;
 };
+
+// export const getAllPosts = async (search = '') => {
+//   const snapshot = await get(ref(db, 'Posts'));
+//   if (!snapshot.exists()) return [];
+
+//   const posts = Object.values(snapshot.val());
+
+//   if (search) {
+//     return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
+//   }
+
+//   return posts;
+// };
 
 export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `Posts/${id}`));

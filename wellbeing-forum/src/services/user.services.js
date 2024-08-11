@@ -6,8 +6,8 @@ export const getUserByHandle = async (handle) => {
   return snapshot.val();
 };
 
-export const createUserHandle = async (handle, uid, email, firstName, lastName, phoneNumber = '', isAdmin = false) => {
-  const user = { handle, uid, email, firstName, lastName, phoneNumber, createdOn: new Date().toString(), isBlocked: false, isAdmin };
+export const createUserHandle = async (handle, uid, email, firstName, lastName, phoneNumber = '', isAdmin = false, isBlocked = false) => {
+  const user = { handle, uid, email, firstName, lastName, phoneNumber, createdOn: new Date().toString(), isBlocked, isAdmin };
   await set(ref(db, `users/${handle}`), user);
 };
 
