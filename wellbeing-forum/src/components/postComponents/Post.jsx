@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { AppContext } from '../../state/app.context';
-import { dislikePost, likePost, updatePost, deletePost, addCommentToPost } from '../../services/posts.service';
+import { dislikePost, likePost, updatePost, deletePost, addCommentToPost, deleteComment, updateComment } from '../../services/posts.service';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -31,6 +31,8 @@ export default function Post({ post }) {
 
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState(post.comments || []);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [commentEditValues, setCommentEditValues] = useState({});
 
 
   const navigate = useNavigate();
@@ -39,13 +41,13 @@ export default function Post({ post }) {
     const fetchComments = async () => {
       try {
         const updatedPost = await getPostById(post.id);
-        setComments(updatedPost.comments || []); 
+        setComments(updatedPost.comments || []);
       } catch (error) {
         console.error("Failed to fetch comments:", error);
-        setComments([]); 
+        setComments([]);
       }
     };
-  
+
     fetchComments();
   }, [post.id]);
 
@@ -120,6 +122,7 @@ export default function Post({ post }) {
     }
 
     const newComment = {
+      id: Date.now().toString(),
       author: userData.handle,
       content: comment,
       createdOn: new Date().toString(),
@@ -130,6 +133,48 @@ export default function Post({ post }) {
       setComment('');
     } catch (error) {
       alert(error.message);
+    }
+  };
+
+  const handleEditComment = (commentId, content) => {
+    setEditingCommentId(commentId);
+    setCommentEditValues(prev => ({
+      ...prev,
+      [commentId]: content,
+    }));
+  };
+
+  const handleSubmitCommentEdit = async (commentId) => {
+    const updatedComment = {
+      ...comments.find(comment => comment.id === commentId),
+      content: commentEditValues[commentId],
+    };
+
+    try {
+      await updateComment(post.id, commentId, updatedComment);
+      setComments(comments.map(comment => comment.id === commentId ? updatedComment : comment));
+      setEditingCommentId(null);
+    } catch (error) {
+      alert('Failed to update the comment: ' + error.message);
+    }
+  };
+
+  const handleCommentChange = (commentId, e) => {
+    const { value } = e.target;
+    setCommentEditValues(prev => ({
+      ...prev,
+      [commentId]: value,
+    }));
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      try {
+        await deleteComment(post.id, commentId);
+        setComments(comments.filter(comment => comment.id !== commentId));
+      } catch (error) {
+        alert('Failed to delete the comment: ' + error.message);
+      }
     }
   };
 
@@ -167,19 +212,20 @@ export default function Post({ post }) {
           <button type="button" onClick={toggleEdit}>Cancel</button>
           <button type="button" onClick={handleDelete}>Delete</button>
         </form>
-       ) : (
+      ) : (
         <>
           <h3>Title: {post.title}</h3>
           <p>Content: {post.content}</p>
           <p>Tags: {post.tags.join(' ')}</p>
           <p>Created on: {new Date(post.createdOn).toLocaleString('en-US', {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                  hour12: false})}</p>
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          })}</p>
           <p>Created by: {post.author}</p>
           <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
           {userData.handle === post.author && (
@@ -187,19 +233,40 @@ export default function Post({ post }) {
           )}
           <h4>Comments:</h4>
           {comments.length > 0 ? (
-            comments.map((comment, index) => (
-              <div key={index}>
-                <p>Posted by: {comment.author}</p>
-                <p>Comment: {comment.content}</p>
-                <p>on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {
-                  year: 'numeric',
-                  month: '2-digit',
-                  day: '2-digit',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                  hour12: false})}</p>
-                  <br/>
+            comments.map(comment => (
+              <div key={comment.id}>
+                {editingCommentId === comment.id ? (
+                  <div>
+                    <textarea
+                      value={commentEditValues[comment.id] || comment.content}
+                      onChange={(e) => handleCommentChange(comment.id, e)}
+                    />
+                    <button onClick={() => handleSubmitCommentEdit(comment.id)}>Save</button>
+                    <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                  </div>
+                ) : (
+                  <div>
+                    <p>Posted by: {comment.author}</p>
+                    <p>Comment: {comment.content}</p>
+                    <p>
+                      on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false})}
+                    </p>
+                    {userData.handle === comment.author && (
+                      <>
+                        <button onClick={() => handleEditComment(comment.id, comment.content)}>Edit</button>
+                        <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                      </>
+                    )}
+                    <br/>
+                  </div>
+                )}
               </div>
             ))
           ) : (

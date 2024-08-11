@@ -93,3 +93,22 @@ export const sortPostsByCommentCount = (posts) => {
     }))
     .sort((a, b) => b.commentCount - a.commentCount);
 };
+
+export const updateComment = async (postId, commentId, updatedComment) => {
+  const commentRef = ref(db, `Posts/${postId}/comments/${commentId}`);
+  try {
+    await update(commentRef, updatedComment);
+  } catch (error) {
+    throw new Error('Failed to update comment: ' + error.message);
+  }
+};
+
+
+export const deleteComment = async (postId, commentId) => {
+  const commentRef = ref(db, `Posts/${postId}/comments/${commentId}`);
+  try {
+    await remove(commentRef);
+  } catch (error) {
+    throw new Error('Failed to delete comment: ' + error.message);
+  }
+};
