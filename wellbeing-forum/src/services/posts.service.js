@@ -1,4 +1,4 @@
-import { ref, push, get, update, remove } from 'firebase/database';
+import { ref, push, get, update, remove, onValue } from 'firebase/database';
 import { db } from '../config/firebase-config'
 
 export const createPost = async (author, title, content, tags) => {
@@ -89,4 +89,21 @@ export const sortPostsByCommentCount = (posts) => {
       commentCount: post.comments ? Object.keys(post.comments).length : 0,
     }))
     .sort((a, b) => b.commentCount - a.commentCount);
+};
+
+export const getRecentPostsRealtime = (callback) => {
+  const postsRef = ref(db, 'Posts');
+  
+  onValue(postsRef, (snapshot) => {
+    if (!snapshot.exists()) {
+      callback([]);
+      return;
+    }
+    
+    const posts = Object.values(snapshot.val());
+
+    posts.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
+
+    callback(posts.slice(0, 10));
+  });
 };

@@ -39,6 +39,7 @@ export default function Post({ post }) {
     const fetchComments = async () => {
       try {
         const updatedPost = await getPostById(post.id);
+        console.log (updatedPost.comments);
         setComments(updatedPost.comments || []); // Ensure comments is an array
       } catch (error) {
         console.error("Failed to fetch comments:", error);
