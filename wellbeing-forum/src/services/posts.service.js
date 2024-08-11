@@ -32,7 +32,10 @@ export const getPostById = async (id) => {
   const postData = snapshot.val();
   const commentsArray = postData.comments
     ? Object.values(postData.comments).map(comment => ({
-        ...comment,
+        id: comment.id,
+        author: comment.author,
+        content: comment.content,
+        createdOn: comment.createdOn
       }))
     : [];
 
@@ -89,6 +92,25 @@ export const sortPostsByCommentCount = (posts) => {
       commentCount: post.comments ? Object.keys(post.comments).length : 0,
     }))
     .sort((a, b) => b.commentCount - a.commentCount);
+};
+
+export const updateComment = async (postId, commentId, updatedComment) => {
+  const commentRef = ref(db, `Posts/${postId}/comments/${commentId}`);
+  try {
+    await update(commentRef, updatedComment);
+  } catch (error) {
+    throw new Error('Failed to update comment: ' + error.message);
+  }
+};
+
+
+export const deleteComment = async (postId, commentId) => {
+  const commentRef = ref(db, `Posts/${postId}/comments/${commentId}`);
+  try {
+    await remove(commentRef);
+  } catch (error) {
+    throw new Error('Failed to delete comment: ' + error.message);
+  }
 };
 
 export const getRecentPostsRealtime = (callback) => {

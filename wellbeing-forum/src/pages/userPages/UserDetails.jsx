@@ -4,24 +4,29 @@ import { getUserData } from '../../services/user.services';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserDetails() {
-  const { user } = useContext(AppContext);
+  const { user, loading } = useContext(AppContext);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    } else {
-      getUserData(user.uid).then((data) => {
-        if (data) {
-          const userKey = Object.keys(data)[0];
-          setUserData(data[userKey]);
+    const fetchUserData = async () => {
+      if (!loading) {
+        if (!user) {
+          navigate('/login');
+        } else {
+          const data = await getUserData(user.uid);
+          if (data) {
+            const userKey = Object.keys(data)[0];
+            setUserData(data[userKey]);
+          }
         }
-      });
-    }
-  }, [user, navigate]);
+      }
+    };
 
-  if (!userData) {
+    fetchUserData();
+  }, [user, loading, navigate]);
+
+  if (loading || !userData) {
     return <p>Loading user details...</p>;
   }
 
@@ -46,4 +51,3 @@ export default function UserDetails() {
     </div>
   );
 }
-
