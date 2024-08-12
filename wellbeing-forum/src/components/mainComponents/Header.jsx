@@ -24,8 +24,8 @@ export default function Header() {
         <h1>Fitness Food and Lifestyle</h1>
         <nav>
           <NavLink to="/">Home</NavLink>
+          <NavLink to="/posts">All posts</NavLink>
           {user && (<>
-            <NavLink to="/posts">All posts</NavLink>
             <NavLink to="/createPost">CreatePost</NavLink>
           </>)}
           <NavLink to="/about">About</NavLink>
