@@ -227,8 +227,10 @@ export default function Post({ post }) {
             hour12: false
           })}</p>
           <p>Created by: {post.author}</p>
-          <button onClick={toggleLike}>{post.likedBy.includes(userData?.handle) ? 'Dislike' : 'Like'}</button>
-          {userData.handle === post.author && (
+          <button onClick={toggleLike}>
+            {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
+          </button>
+          {userData?.handle === post.author && (
             <button onClick={toggleEdit}>Edit</button>
           )}
           <h4>Comments:</h4>
