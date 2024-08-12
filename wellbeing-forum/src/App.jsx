@@ -23,6 +23,7 @@ import EditUser from './pages/userPages/EditUser';
 import MostCommented10Posts from './pages/postPages/MostCommented10Posts';
 import Top10RecentPosts from './pages/postPages/Top10RecentPosts';
 import UserDetails from './pages/userPages/UserDetails';
+import Authenticated from './hoc/Authenticated.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -59,13 +60,13 @@ function App() {
           <Route path='/lifestyle' element={<Lifestyle />} />
           <Route path='/posts' element={<AllPosts />} />
           <Route path='/singlepost/:id' element={<SinglePost />} />
-          <Route path='/createPost' element={<CreatePost />} />
+          <Route path='/createPost' element={<Authenticated><CreatePost /></Authenticated>} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Register' element={<Register />} />
           <Route path='/mostCommented' element={<MostCommented10Posts/>} />
           <Route path='/mostRecent' element={<Top10RecentPosts />} />
           <Route path='/userdetails/edituser' element={<EditUser />} />
-          <Route path='/userdetails' element={<UserDetails />} />
+          <Route path='/userdetails' element={<Authenticated><UserDetails /></Authenticated>} />
         </Routes>
         {!loading && isAdminUser && <AdminPanel />}
         <Footer />
