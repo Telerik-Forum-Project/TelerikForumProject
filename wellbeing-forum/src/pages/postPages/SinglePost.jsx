@@ -32,24 +32,3 @@ export default function SinglePost() {
     </div>
   );
 }
-
-
-//old file trying to fix an issue 
-
-// useEffect(() => {
-//   return onValue(ref(db, Posts/${id}), snapshot => {
-//     const updatedPost = snapshot.val();
-//     setPost({
-//       ...updatedPost,
-//       likedBy: Object.keys(updatedPost.likedBy ?? {}),
-//     });
-//   });
-// }, [id]);
-
-// return (
-//   <div>
-//     <h1>Single post</h1>
-//     { post && <Post post={post}/> }
-//   </div>
-// )
-// }
