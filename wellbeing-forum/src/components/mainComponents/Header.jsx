@@ -24,14 +24,11 @@ export default function Header() {
       <h1>Fitness Food and Lifestyle</h1>
       <nav>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="fitness">Fitness</NavLink>
-        <NavLink to="/food">Food</NavLink>
-        <NavLink to="/lifestyle">Lifestyle</NavLink>
         {user && (<>
           <NavLink to="/posts">All posts</NavLink>
           <NavLink to="/createPost">CreatePost</NavLink>
         </>)}
+        <NavLink to="/about">About</NavLink>
         {!user && <NavLink to="/login">Login</NavLink>}
         {!user && <NavLink to="/register">Register</NavLink>}
         {user && <button onClick={logout}>Logout</button>}
