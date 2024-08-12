@@ -129,7 +129,7 @@ export default function Post({ post }) {
     };
     try {
       await addCommentToPost(post.id, newComment);
-      setComments([...comments, newComment]);
+      setComments(prevComments => [...prevComments, newComment]);
       setComment('');
     } catch (error) {
       alert(error.message);
@@ -171,7 +171,7 @@ export default function Post({ post }) {
     if (window.confirm('Are you sure you want to delete this comment?')) {
       try {
         await deleteComment(post.id, commentId);
-        setComments(comments.filter(comment => comment.id !== commentId));
+        setComments(prevComments => prevComments.filter(comment => comment.id !== commentId));
       } catch (error) {
         alert('Failed to delete the comment: ' + error.message);
       }
