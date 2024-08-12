@@ -11,36 +11,60 @@ export default function AdminPanel() {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [filterType, setFilterType] = useState('users');
+  const [sortCriteria, setSortCriteria] = useState('');
+  const [filterCriteria, setFilterCriteria] = useState('');
 
   useEffect(() => {
     if (searchQuery) {
-      searchUsers(searchQuery).then(setUsers);
+      searchUsers(searchQuery).then(allUsers => {
+        setFilteredUsers(allUsers);
+        setUsers(allUsers);
+      });
     } else {
       setUsers([]);
+      setFilteredUsers([]);
     }
   }, [searchQuery]);
 
   useEffect(() => {
     if (isAdminUser) {
       getAllPosts().then(allPosts => {
+        let filtered = allPosts;
         if (postSearchQuery) {
-          setFilteredPosts(allPosts.filter(post => post.title.toLowerCase().includes(postSearchQuery.toLowerCase())));
-        } else {
-          setFilteredPosts([]);
+          filtered = filtered.filter(post => post.title.toLowerCase().includes(postSearchQuery.toLowerCase()));
         }
+        if (filterCriteria) {
+          filtered = filtered.filter(post => post.category === filterCriteria);
+        }
+        if (sortCriteria) {
+          filtered = filtered.sort((a, b) => {
+            if (sortCriteria === 'title') {
+              return a.title.localeCompare(b.title);
+            } else if (sortCriteria === 'date') {
+              return new Date(b.date) - new Date(a.date);
+            }
+            return 0;
+          });
+        }
+        setFilteredPosts(filtered);
         setPosts(allPosts);
       });
     }
-  }, [isAdminUser, postSearchQuery]);
+  }, [isAdminUser, postSearchQuery, sortCriteria, filterCriteria]);
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
   const handlePostSearchChange = (e) => setPostSearchQuery(e.target.value);
+  const handleSortChange = (e) => setSortCriteria(e.target.value);
+  const handleFilterChange = (e) => setFilterCriteria(e.target.value);
 
   const handleBlockUser = async (handle, block) => {
     await toggleUserBlock(handle, block);
     const updatedUsers = users.map(user => user.handle === handle ? { ...user, isBlocked: block } : user);
     setUsers(updatedUsers);
+    setFilteredUsers(updatedUsers);
   };
 
   const handleDeletePost = async (postId) => {
@@ -61,58 +85,83 @@ export default function AdminPanel() {
 
   return (
     <>
+      <button className="admin-panel-toggle" onClick={togglePanel}>
+        {isPanelOpen ? 'Close Admin Panel' : 'Open Admin Panel'}
+      </button>
       {isPanelOpen && (
         <div className="admin-popup">
-          <button className="admin-panel-toggle" onClick={togglePanel}>
-            Close Panel
-          </button>
           <h4>Admin Panel</h4>
           <div>
-            <h3>Search Users</h3>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              placeholder="Search by username, last name or name"
-            />
-            {searchQuery && (
-              <ul>
-                {users.map(user => (
-                  <li key={user.handle}>
-                    {user.firstName} {user.lastName} - {user.email}
-                    <button onClick={() => handleBlockUser(user.handle, !user.isBlocked)}>
-                      {user.isBlocked ? 'Unblock' : 'Block'}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+            <h3>Search</h3>
+            <div>
+              <button onClick={() => setFilterType('users')}>Search Users</button>
+              <button onClick={() => setFilterType('posts')}>Search Posts</button>
+            </div>
+            {filterType === 'users' && (
+              <>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Search by username, last name or name"
+                />
+                {filteredUsers.length > 0 ? (
+                  <ul>
+                    {filteredUsers.map(user => (
+                      <li key={user.handle}>
+                        {user.firstName} {user.lastName} - {user.email}
+                        <button onClick={() => handleBlockUser(user.handle, !user.isBlocked)}>
+                          {user.isBlocked ? 'Unblock' : 'Block'}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No users found</p>
+                )}
+              </>
             )}
-          </div>
-          <div>
-            <h3>Search Posts</h3>
-            <input
-              type="text"
-              value={postSearchQuery}
-              onChange={handlePostSearchChange}
-              placeholder="Search by post title"
-            />
-            {postSearchQuery && (
-              <ul>
-                {filteredPosts.map(post => (
-                  <li key={post.id}>
-                    {post.title} - {post.author}
-                    <button onClick={() => handleDeletePost(post.id)}>Delete</button>
-                  </li>
-                ))}
-              </ul>
+            {filterType === 'posts' && (
+              <>
+                <input
+                  type="text"
+                  value={postSearchQuery}
+                  onChange={handlePostSearchChange}
+                  placeholder="Search by post title or content"
+                />
+                <div>
+                  <label>Sort by: </label>
+                  <select value={sortCriteria} onChange={handleSortChange}>
+                    <option value="">None</option>
+                    <option value="title">Title</option>
+                    <option value="date">Date</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Filter by category: </label>
+                  <select value={filterCriteria} onChange={handleFilterChange}>
+                    <option value="">None</option>
+                    <option value="technology">Technology</option>
+                    <option value="health">Health</option>
+                    <option value="lifestyle">Lifestyle</option>
+                  </select>
+                </div>
+                {filteredPosts.length > 0 ? (
+                  <ul className="admin-post-list" >
+                    {filteredPosts.map(post => (
+                      <li key={post.id}>
+                        {post.title} - {post.content}
+                        <button onClick={() => handleDeletePost(post.id)}>Delete</button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No posts found</p>
+                )}
+              </>
             )}
           </div>
         </div>
-      )}
-      {!isPanelOpen && (
-        <button className="admin-panel-open" onClick={togglePanel}>
-          Open
-        </button>
       )}
     </>
   );
