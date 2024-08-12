@@ -13,9 +13,9 @@ export default function AdminPanel() {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [filterType, setFilterType] = useState('users'); // State to manage filter type
-  const [sortCriteria, setSortCriteria] = useState(''); // State to manage sorting criteria for posts
-  const [filterCriteria, setFilterCriteria] = useState(''); // State to manage filtering criteria for posts
+  const [filterType, setFilterType] = useState('users');
+  const [sortCriteria, setSortCriteria] = useState('');
+  const [filterCriteria, setFilterCriteria] = useState('');
 
   useEffect(() => {
     if (searchQuery) {

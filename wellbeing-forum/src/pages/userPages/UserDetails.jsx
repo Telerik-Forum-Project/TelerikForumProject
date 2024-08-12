@@ -4,13 +4,13 @@ import { getUserData } from '../../services/user.services';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserDetails() {
-  const { user, loading } = useContext(AppContext);
+  const { user, isLoading } = useContext(AppContext);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!loading) {
+      if (!isLoading) {
         if (!user) {
           navigate('/login');
         } else {
@@ -22,11 +22,13 @@ export default function UserDetails() {
         }
       }
     };
+  
+    if (!isLoading) {
+      fetchUserData();
+    }
+  }, [user, isLoading]);
 
-    fetchUserData();
-  }, [user, loading, navigate]);
-
-  if (loading || !userData) {
+  if (isLoading || !userData) {
     return <p>Loading user details...</p>;
   }
 
@@ -45,7 +47,6 @@ export default function UserDetails() {
         <p><strong>Phone Number:</strong> {userData.phoneNumber || 'Not Provided'}</p>
         <p><strong>Account Created On:</strong> {userData.createdOn}</p>
         <p><strong>Admin Status:</strong> {userData.isAdmin ? 'Yes' : 'No'}</p>
-        <p><strong>Blocked Status:</strong> {userData.isBlocked ? 'Blocked' : 'Active'}</p>
         <button onClick={editUser}>Edit details</button>
       </div>
     </div>

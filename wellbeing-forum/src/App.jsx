@@ -38,6 +38,10 @@ function App() {
   //   }
   // }, [user]);
 
+if (appState.user !== user) {
+  setAppState({...appState, user})
+}
+
   useEffect(() => {
     if (user) {
       getUserData(user.uid).then(data => {
