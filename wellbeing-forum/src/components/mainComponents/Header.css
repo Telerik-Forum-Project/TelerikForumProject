@@ -14,8 +14,7 @@
 }
  
 .header-div h1 {
-    margin-top: 20px; 
-    margin-bottom: 20px; 
+    margin: 0;
     font-size: 2rem;
     color: #343a40;
     border-right: 1px solid #343a40; 
