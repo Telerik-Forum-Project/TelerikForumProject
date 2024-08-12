@@ -1,8 +1,11 @@
+import './About.css';
+
 export default function About() {
 
 
     return (
         <>
+        <div className='main-container'>
         <h1>This is a group project created by students of Telerik Academy</h1>
         <h1>Meet the creators:</h1>
         <div id="creator-container">
@@ -15,6 +18,7 @@ export default function About() {
             <div>
             <h3>Trayan Trufev</h3>
             </div>
+        </div>
         </div>
         </>
     )

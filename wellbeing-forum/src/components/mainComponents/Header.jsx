@@ -46,7 +46,7 @@ export default function Header() {
                       </>
                   ) : (
                       <>
-                          <span>To see more</span>
+                          <span>To see more:</span>
                           <button className="button" onClick={() => navigate('/login')}>Login</button>
                           <button className="button" onClick={() => navigate('/register')}>Register</button>
                       </>

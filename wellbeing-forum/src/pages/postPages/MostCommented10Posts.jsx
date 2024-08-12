@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getAllPosts, sortPostsByCommentCount } from "../../services/posts.service";
 
 export default function MostCommented10Posts() {
