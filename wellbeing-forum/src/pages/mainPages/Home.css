@@ -1,0 +1,50 @@
+.home-div {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    align-items: center;
+}
+
+#heading-one {
+    font-size: 60px;
+    background: linear-gradient(90deg, #5DADE2, #85C1E9, #AED6F1, #D6EAF8);
+    background-clip: text; 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    text-align: center; 
+    margin: 20px 0; 
+    padding: 10px; 
+    border-radius: 8px;
+}
+
+.line {
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, #5DADE2, #85C1E9, #AED6F1, #D6EAF8);
+    margin: 10px 0; 
+}
+
+.nav-div {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.nav-message {
+    font-size: 30px;
+    margin-left: 70px;
+}
+
+.nav-anchors {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-link {
+    display: block;
+    margin-left: 50px;
+    margin-top: 10px;
+    font-size: 30px;
+    text-align: center;
+}
