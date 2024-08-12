@@ -29,7 +29,7 @@ export default function Post({ post }) {
     tags: post.tags.join(', '),
   });
 
-  const [comment, setComment] = useState(''); 
+  const [comment, setComment] = useState('');
   const [comments, setComments] = useState(post.comments || []);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [commentEditValues, setCommentEditValues] = useState({});
@@ -258,15 +258,16 @@ export default function Post({ post }) {
                         hour: '2-digit',
                         minute: '2-digit',
                         second: '2-digit',
-                        hour12: false})}
+                        hour12: false
+                      })}
                     </p>
-                    {/* {userData.handle === comment.author && (
+                    {userData?.handle === comment.author && (
                       <>
                         <button onClick={() => handleEditComment(comment.id, comment.content)}>Edit</button>
                         <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
                       </>
-                    )} */}
-                    <br/>
+                    )}
+                    <br />
                   </div>
                 )}
               </div>

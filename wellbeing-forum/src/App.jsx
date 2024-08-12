@@ -56,7 +56,7 @@ if (appState.user !== user) {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
-          <Route path='/posts' element={<AllPosts />} />
+          <Route path='/posts' element={<Authenticated><AllPosts /></Authenticated>} />
           <Route path='/singlepost/:id' element={<SinglePost />} />
           <Route path='/createPost' element={<Authenticated><CreatePost /></Authenticated>} />
           <Route path='/Login' element={<Login />} />
