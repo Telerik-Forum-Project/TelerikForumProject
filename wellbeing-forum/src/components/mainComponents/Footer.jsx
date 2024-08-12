@@ -1,3 +1,4 @@
+import './Footer.css'
 
 export default function Footer() {
     const currentDate = new Date();
@@ -8,8 +9,8 @@ export default function Footer() {
     const formattedDate = `${day}/${month}/${year}`;
 
     return (
-        <footer>
-            <p>&copy; {formattedDate}</p>
+        <footer className="footer">
+            <p>VVT &copy; {formattedDate}</p>
         </footer>
     );
 }
