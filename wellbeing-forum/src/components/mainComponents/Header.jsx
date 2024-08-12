@@ -28,10 +28,10 @@ export default function Header() {
               <div className="nav-buttons">
                   <button className="button" onClick={() => navigate('/')}>Home</button>
                   <button className="button" onClick={() => navigate('/about')}>About</button>
-                  <button className="button" onClick={() => navigate('/posts')}>All posts</button>
                   {user && (
                       <>
-                          <button className="button" onClick={() => navigate('/createPost')}>CreatePost</button>
+                        <button className="button" onClick={() => navigate('/posts')}>All posts</button>
+                        <button className="button" onClick={() => navigate('/createPost')}>CreatePost</button>
                       </>
                   )}
               </div>

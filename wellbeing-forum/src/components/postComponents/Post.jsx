@@ -260,12 +260,12 @@ export default function Post({ post }) {
                         second: '2-digit',
                         hour12: false})}
                     </p>
-                    {/* {userData.handle === comment.author && (
+                    {userData.handle === comment.author && (
                       <>
                         <button onClick={() => handleEditComment(comment.id, comment.content)}>Edit</button>
                         <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
                       </>
-                    )} */}
+                    )}
                     <br/>
                   </div>
                 )}
