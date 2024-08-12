@@ -1,10 +1,21 @@
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+}
+
 #creator-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin-top: 20px;
-    margin-left: 300px;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 #creator-container div {
@@ -15,17 +26,19 @@
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 200px;
-    margin: 10px;
+    margin-left: 250px;
 }
 
 h1 {
+    align-items: center;
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 40px !important;
+    margin-bottom: 150px;
+    margin-left: 350px;
+    margin-right: 80px;
     color: #333;
 }
 
 h3 {
     font-size: 1.5rem;
-    color: #555;
 }
