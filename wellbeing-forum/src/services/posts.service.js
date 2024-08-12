@@ -11,27 +11,38 @@ export const createPost = async (author, title, content, tags) => {
   return id;
 };
 
-export const getAllPosts = async (search = '') => {
+export const getAllPosts = async () => {
   const snapshot = await get(ref(db, 'Posts'));
   if (!snapshot.exists()) return [];
 
-  const posts = Object.values(snapshot.val()).map(post => ({
+  return Object.values(snapshot.val()).map(post => ({
     ...post,
     likeCount: post.likedBy ? Object.keys(post.likedBy).length : 0,
   }));
+};
 
-  if (search) {
-    return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
+
+export const searchPosts = (posts, search = '', searchType = 'content') => {
+  if (!search) return posts;
+
+  if (searchType === 'content') {
+    return posts.filter(p => p.content.toLowerCase().includes(search.toLowerCase()));
+  } else if (searchType === 'tag') {
+    return posts.filter(p => p.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())));
   }
 
   return posts;
 };
 
+
 // export const getAllPosts = async (search = '') => {
 //   const snapshot = await get(ref(db, 'Posts'));
 //   if (!snapshot.exists()) return [];
 
-//   const posts = Object.values(snapshot.val());
+//   const posts = Object.values(snapshot.val()).map(post => ({
+//     ...post,
+//     likeCount: post.likedBy ? Object.keys(post.likedBy).length : 0,
+//   }));
 
 //   if (search) {
 //     return posts.filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
@@ -39,6 +50,8 @@ export const getAllPosts = async (search = '') => {
 
 //   return posts;
 // };
+
+
 
 export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `Posts/${id}`));
