@@ -1,6 +1,12 @@
 import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db, auth } from '../config/firebase-config';
 
+
+export const getAllUsers = async () => {
+  const snapshot = await get(ref(db, 'users'));
+  if (!snapshot.exists()) return [];
+  return snapshot;
+}
 export const getUserByHandle = async (handle) => {
   const snapshot = await get(ref(db, `users/${handle}`));
   return snapshot.val();
