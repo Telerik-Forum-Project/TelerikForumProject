@@ -1,14 +1,16 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../../state/app.context";
 import { createPost } from "../../services/posts.service";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
     const [post, setPost] = useState({
         title: '',
         content: '',
-        tags: [],
+        tags: '',
     });
     const { userData } = useContext(AppContext);
+    const navigate = useNavigate();
 
     const updatePost = (key, value) => {
         setPost({
@@ -17,31 +19,20 @@ export default function CreatePost() {
         });
     };
 
-    const toggleTag = (tag) => {
-        setPost((prevState) => ({
-            ...prevState,
-            tags: prevState.tags.includes(tag)
-                ? prevState.tags.filter((t) => t !== tag)
-                : [...prevState.tags, tag]
-        }));
-    };
-
-    //tags not adding in the db
-
     const handleCreatePost = async () => {
         if (userData.isBlocked) {
             return alert('You are blocked from creating posts.');
         }
 
-        if (post.title.length < 16) {
+        if (post.title.length < 3) {
             return alert('Title too short!');
         }
-        
+
         if (post.title.length > 64) {
             return alert('Title too long!');
         }
 
-        if (post.content.length < 32) {
+        if (post.content.length < 10) {
             return alert('Comment too short!');
         }
 
@@ -49,17 +40,21 @@ export default function CreatePost() {
             return alert('Comment too long!');
         }
 
-        if (post.tags.length === 0) {
-            return alert("You haven't selected a tag!");
+        if (!post.tags.trim()) {
+            return alert("You haven't written any tag!");
         }
 
         if (!userData || !userData.handle) {
             return alert('User data is not available');
         }
 
+        const tagsArray = post.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+
         try {
-            await createPost(userData.handle, post.title, post.content, post.tags);
-            setPost({ title: '', content: '' , tags: []});
+            const postId = await createPost(userData.handle, post.title, post.content, tagsArray);
+            setPost({ title: '', content: '', tags: '' });
+
+            navigate(`/singlepost/${postId}`);
         } catch (error) {
             alert(error.message);
         }
@@ -69,21 +64,31 @@ export default function CreatePost() {
         <div>
             <h1>Create Post</h1>
             <label htmlFor="title">Title: </label>
-            <input value={post.title} onChange={e => updatePost('title', e.target.value)} type="text" name="title" id="title" /><br />
+            <input
+                value={post.title}
+                onChange={e => updatePost('title', e.target.value)}
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Enter the title of your post"
+            /><br />
             <label htmlFor="content">Content: </label>
-            <textarea value={post.content} onChange={e => updatePost('content', e.target.value)} name="content" id="content" /><br /><br />
-            <label>
-                <input type="checkbox" checked={post.tags.includes('Fitness')} onChange={() => toggleTag('Fitness')}/>
-                    Fitness
-            </label>
-            <label>
-                <input type="checkbox" checked={post.tags.includes('Food')} onChange={() => toggleTag('Food')}/>
-                    Food
-            </label>
-            <label>
-                <input type="checkbox" checked={post.tags.includes('Lifestyle')} onChange={() => toggleTag('Lifestyle')}/>
-                    Lifestyle
-            </label>
+            <textarea
+                value={post.content}
+                onChange={e => updatePost('content', e.target.value)}
+                name="content"
+                id="content"
+                placeholder="Write the content of your post"
+            /><br /><br />
+            <label htmlFor="tags">Tags (separated by commas): </label>
+            <input
+                value={post.tags}
+                onChange={e => updatePost('tags', e.target.value)}
+                type="text"
+                name="tags"
+                id="tags"
+                placeholder="Enter tags separated by commas (e.g., Fitness, Health)"
+            /><br />
             <button onClick={handleCreatePost}>Create Post</button>
         </div>
     )

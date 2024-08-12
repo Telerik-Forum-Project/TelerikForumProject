@@ -5,37 +5,37 @@ import { logoutUser } from "../../services/authenticate-service"
 
 export default function Header() {
 
-    const { user, userData, setAppState } = useContext(AppContext);
-    const navigate = useNavigate();
-  
-    const logout = async () => {
-      await logoutUser();
-      setAppState({ user: null, userData: null });
-      navigate('/login');
-    };
-    
-    const detailUser = () => {
-      navigate('userdetails');
-    }
+  const { user, userData, setAppState } = useContext(AppContext);
+  const navigate = useNavigate();
 
-    return (
-        <>
-        <div className="header-div">
-      <h1>Fitness Food and Lifestyle</h1>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        {user && (<>
-          <NavLink to="/posts">All posts</NavLink>
-          <NavLink to="/createPost">CreatePost</NavLink>
-        </>)}
-        <NavLink to="/about">About</NavLink>
-        {!user && <NavLink to="/login">Login</NavLink>}
-        {!user && <NavLink to="/register">Register</NavLink>}
-        {user && <button onClick={logout}>Logout</button>}
-        {userData && <span>Welcome, {userData.handle}</span>}
-        {userData && <button onClick={detailUser}>{userData.handle}</button>}
-      </nav>
+  const logout = async () => {
+    await logoutUser();
+    setAppState({ user: null, userData: null });
+    navigate('/login');
+  };
+
+  const detailUser = () => {
+    navigate('userdetails');
+  }
+
+  return (
+    <>
+      <div className="header-div">
+        <h1>Fitness Food and Lifestyle</h1>
+        <nav>
+          <NavLink to="/">Home</NavLink>
+          {user && (<>
+            <NavLink to="/posts">All posts</NavLink>
+            <NavLink to="/createPost">CreatePost</NavLink>
+          </>)}
+          <NavLink to="/about">About</NavLink>
+          {!user && <NavLink to="/login">Login</NavLink>}
+          {!user && <NavLink to="/register">Register</NavLink>}
+          {user && <button onClick={logout}>Logout</button>}
+          {userData && <span>Welcome, {userData.handle}</span>}
+          {userData && <button onClick={detailUser}>{userData.handle}</button>}
+        </nav>
       </div>
-      </>
-    )
+    </>
+  )
 }

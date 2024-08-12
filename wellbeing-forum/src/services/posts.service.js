@@ -8,6 +8,7 @@ export const createPost = async (author, title, content, tags) => {
   await update(ref(db), {
     [`Posts/${id}/id`]: id,
   });
+  return id;
 };
 
 export const getAllPosts = async (search = '') => {
