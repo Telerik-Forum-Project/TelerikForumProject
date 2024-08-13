@@ -44,10 +44,10 @@ h3 {
 }
 
 .creator-image {
-    width: 150px; /* Adjust the size as needed */
+    width: 150px;
     height: auto;
-    border-radius: 50%; /* Optional: Make the image circular */
-    margin-bottom: 10px; /* Optional: Add some space between the image and the name */
+    border-radius: 50%; 
+    margin-bottom: 10px; 
   }
 
   #spanid {
