@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from '../../state/app.context';
 import { dislikePost, likePost, updatePost, deletePost, addCommentToPost, deleteComment, updateComment } from '../../services/posts.service';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { getPostById } from '../../services/posts.service';
+import { getPostById, getUniqueCommentId } from '../../services/posts.service';
 import './Post.css';
 
 /**
- * 
  * @param {{ post: {
  *  id: string,
  *  author: string,
@@ -35,8 +32,9 @@ export default function Post({ post }) {
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [commentEditValues, setCommentEditValues] = useState({});
 
-
   const navigate = useNavigate();
+
+  const sessionStartTime = useRef(new Date().getTime());
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -48,7 +46,7 @@ export default function Post({ post }) {
         setComments([]);
       }
     };
-
+  
     fetchComments();
   }, [post.id]);
 
@@ -122,8 +120,10 @@ export default function Post({ post }) {
       return;
     }
 
+    const newCommentId = getUniqueCommentId();
+
     const newComment = {
-      id: Date.now().toString(),
+      id: newCommentId,
       author: userData.handle,
       content: comment,
       createdOn: new Date().toString(),
@@ -146,17 +146,31 @@ export default function Post({ post }) {
   };
 
   const handleSubmitCommentEdit = async (commentId) => {
-    const updatedComment = {
-      ...comments.find(comment => comment.id === commentId),
-      content: commentEditValues[commentId],
-    };
+    const commentToUpdate = comments.find(comment => comment.id === commentId);
+  
+    if (!commentToUpdate) {
+      alert('Comment not found');
+      return;
+    }
 
+    const updatedComment = {
+      ...commentToUpdate,
+      content: commentEditValues[commentId] || commentToUpdate.content,
+    };
+  
+    console.log('Updating comment:', updatedComment); 
+  
     try {
       await updateComment(post.id, commentId, updatedComment);
-      setComments(comments.map(comment => comment.id === commentId ? updatedComment : comment));
+      setComments(prevComments =>
+        prevComments.map(comment =>
+          comment.id === commentId ? updatedComment : comment
+        )
+      );
       setEditingCommentId(null);
     } catch (error) {
       alert('Failed to update the comment: ' + error.message);
+      console.error('Update error:', error); 
     }
   };
 
@@ -180,9 +194,9 @@ export default function Post({ post }) {
   };
 
   return (
-    <div className="post-container">
+    <div>
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="edit-form">
+        <form onSubmit={handleSubmit}>
           <div>
             <label>Title:</label>
             <input
@@ -209,72 +223,91 @@ export default function Post({ post }) {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="edit-button">Save</button>
-          <button type="button" className="edit-button" onClick={toggleEdit}>Cancel</button>
-          <button type="button" className="delete-button" onClick={handleDelete}>Delete</button>
+          <button type="submit">Save</button>
+          <button type="button" onClick={toggleEdit}>Cancel</button>
+          <button type="button" onClick={handleDelete}>Delete</button>
         </form>
       ) : (
         <>
-          <h3 className="post-title">     {post.title}
-          {post.tags.map(tag => (
-            <span key={tag} className="post-tag"> #{tag}</span>
-          ))}</h3>
-          <div className="post-meta-container">
-            <p className="post-content">{post.content}</p>
-            <p className="bordered">Created on: {new Date(post.createdOn).toLocaleString('en-US', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-              hour12: false
-            })}</p>
-            <p className="bordered">Created by: {post.author}</p>
-          </div>
-          <div className="post-actions">
-            <button className={`like-button ${userData?.handle && post.likedBy.includes(userData.handle) ? 'liked' : ''}`} onClick={toggleLike}>
-              {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
-            </button>
-            {userData?.handle === post.author && (
-              <button className="edit-button" onClick={toggleEdit}>Edit</button>
-            )}
-          </div>
+          <h3>Title: {post.title}</h3>
+          <p>Content: {post.content}</p>
+          <p>Tags: {post.tags.join(' ')}</p>
+          <p>Created on: {new Date(post.createdOn).toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          })}</p>
+          <p>Created by: {post.author}</p>
+          <button onClick={toggleLike}>
+            {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
+          </button>
+          {userData?.handle === post.author && (
+            <button onClick={toggleEdit}>Edit</button>
+          )}
           <h4>Comments:</h4>
           {comments.length > 0 ? (
-            comments.map(comment => (
-              <div key={comment.id} className="comment-wrapper">
-                {editingCommentId === comment.id ? (
-                  <div>
-                    <textarea
-                      value={commentEditValues[comment.id] || comment.content}
-                      onChange={(e) => handleCommentChange(comment.id, e)}
-                    />
-                    <button className="edit-button" onClick={() => handleSubmitCommentEdit(comment.id)}>Save</button>
-                    <button className="edit-button" onClick={() => setEditingCommentId(null)}>Cancel</button>
-                  </div>
-                ) : (
-                  <div className="comment-container">
-                    <p>Posted by: {comment.author}</p>
-                    <p>Comment: {comment.content}</p>
-                    <p>
-                      on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: false
-                      })}
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))
+            comments.map(comment => {
+              // Check if the comment is new
+              const commentCreationTime = new Date(comment.createdOn).getTime();
+              const isNewComment = commentCreationTime >= sessionStartTime.current;
+
+              return (
+                <div key={comment.id}>
+                  {editingCommentId === comment.id ? (
+                    <div>
+                      <textarea
+                        value={commentEditValues[comment.id] || comment.content}
+                        onChange={(e) => handleCommentChange(comment.id, e)}
+                      />
+                      <button onClick={() => handleSubmitCommentEdit(comment.id)}>Save</button>
+                      <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                    </div>
+                  ) : (
+                    <div>
+                      <p>Posted by: {comment.author}</p>
+                      <p>Comment: {comment.content}</p>
+                      <p>
+                        on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                          hour12: false
+                        })}
+                      </p>
+                      {userData?.handle === comment.author && !isNewComment && (
+                        <>
+                          <button onClick={() => handleEditComment(comment.id, comment.content)}>Edit</button>
+                          <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                        </>
+                      )}
+                      <br />
+                    </div>
+                  )}
+                </div>
+              );
+            })
           ) : (
             <p>No comments yet.</p>
           )}
+          <form onSubmit={handleCommentSubmit}>
+            <div>
+              <label>Comment:</label>
+              <input
+                type="text"
+                name="comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+            <button type="submit">Add Comment</button>
+          </form>
         </>
       )}
     </div>

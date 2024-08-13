@@ -41,12 +41,13 @@ export const getPostById = async (id) => {
   }
 
   const postData = snapshot.val();
+
   const commentsArray = postData.comments
-    ? Object.values(postData.comments).map(comment => ({
-        id: comment.id,
+    ? Object.entries(postData.comments).map(([firebaseKey, comment]) => ({
+        id: firebaseKey, 
         author: comment.author,
         content: comment.content,
-        createdOn: comment.createdOn
+        createdOn: comment.createdOn,
       }))
     : [];
 
@@ -140,3 +141,18 @@ export const getRecentPostsRealtime = (callback) => {
     callback(posts.slice(0, 10));
   });
 };
+
+export const getUniqueCommentId = () => {
+  const newCommentRef = push(ref(db, 'comments'));
+  return newCommentRef.key;
+};
+
+
+// кода на Стоян и той не работи
+
+// export const addCommentToPost = async (postId, comment) => {
+//   const commentRef = ref(db, `Posts/${postId}/comments`);
+//   const result = await push(commentRef, comment);
+
+//    return update(commentRef, {[`${result.key}/id`]:result.key});
+// };
