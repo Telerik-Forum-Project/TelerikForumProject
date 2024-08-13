@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import Post from "../../components/postComponents/Post";
+import "./SinglePost.css";
+import '../../components/postComponents/Post.css'
 
 export default function SinglePost() {
   const [post, setPost] = useState(null);
