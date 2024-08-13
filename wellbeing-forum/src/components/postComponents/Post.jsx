@@ -194,9 +194,9 @@ export default function Post({ post }) {
   };
 
   return (
-    <div className="post-container">
+    <div>
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="edit-form">
+        <form onSubmit={handleSubmit}>
           <div>
             <label>Title:</label>
             <input
@@ -223,40 +223,35 @@ export default function Post({ post }) {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="edit-button">Save</button>
-          <button type="button" className="edit-button" onClick={toggleEdit}>Cancel</button>
-          <button type="button" className="delete-button" onClick={handleDelete}>Delete</button>
+          <button type="submit">Save</button>
+          <button type="button" onClick={toggleEdit}>Cancel</button>
+          <button type="button" onClick={handleDelete}>Delete</button>
         </form>
       ) : (
         <>
-          <h3 className="post-title">     {post.title}
-          {post.tags.map(tag => (
-            <span key={tag} className="post-tag"> #{tag}</span>
-          ))}</h3>
-          <div className="post-meta-container">
-            <p className="post-content">{post.content}</p>
-            <p className="bordered">Created on: {new Date(post.createdOn).toLocaleString('en-US', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-              hour12: false
-            })}</p>
-            <p className="bordered">Created by: {post.author}</p>
-          </div>
-          <div className="post-actions">
-            <button className={`like-button ${userData?.handle && post.likedBy.includes(userData.handle) ? 'liked' : ''}`} onClick={toggleLike}>
-              {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
-            </button>
-            {userData?.handle === post.author && (
-              <button className="edit-button" onClick={toggleEdit}>Edit</button>
-            )}
-          </div>
+          <h3>Title: {post.title}</h3>
+          <p>Content: {post.content}</p>
+          <p>Tags: {post.tags.join(' ')}</p>
+          <p>Created on: {new Date(post.createdOn).toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          })}</p>
+          <p>Created by: {post.author}</p>
+          <button onClick={toggleLike}>
+            {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
+          </button>
+          {userData?.handle === post.author && (
+            <button onClick={toggleEdit}>Edit</button>
+          )}
           <h4>Comments:</h4>
           {comments.length > 0 ? (
             comments.map(comment => {
+              // Check if the comment is new
               const commentCreationTime = new Date(comment.createdOn).getTime();
               const isNewComment = commentCreationTime >= sessionStartTime.current;
 
@@ -301,6 +296,18 @@ export default function Post({ post }) {
           ) : (
             <p>No comments yet.</p>
           )}
+          <form onSubmit={handleCommentSubmit}>
+            <div>
+              <label>Comment:</label>
+              <input
+                type="text"
+                name="comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+            <button type="submit">Add Comment</button>
+          </form>
         </>
       )}
     </div>
