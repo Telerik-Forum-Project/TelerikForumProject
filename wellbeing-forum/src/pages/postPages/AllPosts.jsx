@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllPosts, searchPosts } from "../../services/posts.service";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import './AllPosts.css'
 
 export default function AllPosts() {
   const [posts, setPosts] = useState([]);
@@ -62,11 +63,11 @@ export default function AllPosts() {
   };
 
   return (
-    <div>
-      <h1>Posts:</h1>
+    <div id="main-div">
+      <h1 id="posts-title">Posts:</h1>
       
       {/* Search Type Selection */}
-      <div>
+      <div className="search-by-buttons">
         <label>
           <input
             type="radio"
