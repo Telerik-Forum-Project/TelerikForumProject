@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { AppContext } from '../../state/app.context';
 import { dislikePost, likePost, updatePost, deletePost, addCommentToPost, deleteComment, updateComment } from '../../services/posts.service';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getPostById, getUniqueCommentId } from '../../services/posts.service';
 import './Post.css';
 
@@ -244,7 +244,7 @@ export default function Post({ post }) {
             second: '2-digit',
             hour12: false
           })}</p>
-          <p id='created-by'>Created by: {post.author}</p>
+          <p id='created-by'>Created by: <Link to = {`/AuthorDetails/${post.author}`}>{post.author}</Link></p>
           </div>
           <div className="post-actions">
             <button onClick={toggleLike} className="like-button">
@@ -277,7 +277,7 @@ export default function Post({ post }) {
                     </div>
                   ) : (
                     <div>
-                      <p id='author'>{comment.author}:</p>
+                      <p id='author'><Link to = {`/AuthorDetails/${comment.author}`}>{comment.author}:</Link></p>
                       <p id='comment-content'>{comment.content}</p>
                       <p id='date'>
                         on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {

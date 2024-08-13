@@ -21,6 +21,8 @@ import MostCommented10Posts from './pages/postPages/MostCommented10Posts';
 import Top10RecentPosts from './pages/postPages/Top10RecentPosts';
 import UserDetails from './pages/userPages/UserDetails';
 import Authenticated from './hoc/Authenticated.jsx';
+import AuthorDetails from './pages/userPages/AuthorDetails.jsx';
+import Post from './components/postComponents/Post.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -65,6 +67,8 @@ if (appState.user !== user) {
           <Route path='/mostRecent' element={<Top10RecentPosts />} />
           <Route path='/userdetails/edituser' element={<EditUser />} />
           <Route path='/userdetails' element={<Authenticated><UserDetails /></Authenticated>} />
+          <Route path='/AuthorDetails/:handle' element={<AuthorDetails />} />
+          <Route path='/posts/:postId' element={<Post />} />
         </Routes>
         {!loading && isAdminUser && <AdminPanel />}
         <Footer />
