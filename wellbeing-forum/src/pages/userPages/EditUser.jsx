@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../state/app.context";
 import { useNavigate } from "react-router-dom";
 import { getUserData, updateUserData } from "../../services/user.services";
+import './EditUser.css'
 
 export default function EditUser() {
   const { user, userData, setAppState } = useContext(AppContext);
@@ -66,7 +67,7 @@ export default function EditUser() {
   return (
     <form className="edit-user-form">
       <h2>Edit User Details</h2>
-      <p>Username cannot be changed</p>
+      <p id="msg">Username cannot be changed</p>
       <label htmlFor="firstName" className="firstName-label">First Name:
         <input type="text" name="firstName" id="firstName"
           placeholder="Enter first name here..."
