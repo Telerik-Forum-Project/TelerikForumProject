@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../state/app.context';
 import { getUserData } from '../../services/user.services';
 import { useNavigate } from 'react-router-dom';
+import './UserDetails.css'
 
 export default function UserDetails() {
   const { user, isLoading } = useContext(AppContext);
