@@ -49,6 +49,8 @@
   padding: 15px;
   margin: 0;
   list-style-type: none;
+  border: 1px solid black;
+  border-radius: 8px;
 }
 
 .admin-user-list {
@@ -76,4 +78,19 @@
   width: 350px;
   height: 30px;
   border-radius: 8px;
+}
+
+.admin-post-list li h4 {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+
+.admin-post-list li {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.admin-post-buttons button {
+  margin-left: 2px;
 }

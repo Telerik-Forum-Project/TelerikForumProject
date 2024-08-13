@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useAdmin from '../../hooks/useAdmin';
 import { searchUsers, toggleUserBlock } from "../../services/user.services";
 import { getAllPosts, deletePost } from "../../services/posts.service";
@@ -16,6 +17,8 @@ export default function AdminPanel() {
   const [filterType, setFilterType] = useState('users');
   const [sortCriteria, setSortCriteria] = useState('');
   const [filterCriteria, setFilterCriteria] = useState('');
+
+  const navigate = useNavigate();
  
   useEffect(() => {
     if (searchQuery) {
@@ -148,11 +151,14 @@ export default function AdminPanel() {
                   </select>
                 </div>
                 {filteredPosts.length > 0 ? (
-                  <ul className="admin-post-list" >
+                  <ul className="admin-post-list">
                     {filteredPosts.map(post => (
                       <li key={post.id}>
-                        {post.title} - {post.content}
+                        <h4>{post.title}</h4>
+                        <div className="admin-post-buttons">
                         <button onClick={() => handleDeletePost(post.id)}>Delete</button>
+                        <button onClick={() => navigate(`/singlepost/${post.id}`)}>Go to Post</button>
+                        </div>
                       </li>
                     ))}
                   </ul>
