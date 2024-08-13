@@ -3,6 +3,7 @@ import { AppContext } from "../../state/app.context";
 import { useNavigate } from "react-router-dom";
 import { createUserHandle, getUserByHandle } from "../../services/user.services";
 import { registerUser } from "../../services/authenticate-service";
+import './Register.css';
 
 export default function Register() {
   const [user, setUser] = useState({
@@ -57,45 +58,21 @@ export default function Register() {
     }
   };
 
-  return (<form className="register-from">
-    <h2>Register Form</h2>
-    <label htmlFor="firstName" className="firstName-label">first name:
-      <input type="text" name="firstName" id="firstName"
-        placeholder="Enter first name here..."
-        value={user.firstName} onChange={updateUser('firstName')} />
-    </label><br />
-    <br />
-    <label htmlFor="lastName" className="lastName-label">last name:
-      <input type="text" name="lastName" id="lastName"
-        placeholder="Enter last name here..."
-        value={user.lastName} onChange={updateUser('lastName')} />
-    </label><br />
-    <br />
-    <label htmlFor="handle" className="username-label">username:
-      <input type="text" name="handle" id="handle"
-        placeholder="Enter username here..."
-        value={user.handle} onChange={updateUser('handle')} />
-    </label><br />
-    <br />
-    <label htmlFor="email" className="email-label">email:
-      <input type="text" name="email" id="email"
-        placeholder="Enter email here..."
-        value={user.email} onChange={updateUser('email')} />
-    </label><br />
-    <br />
-    <label htmlFor="password" className="password-label">password:
-      <input type="password" name="password" id="password"
-        placeholder="Enter password here..."
-        value={user.password} onChange={updateUser('password')} />
-    </label><br />
-    <br />
-    <label className="confirm-password-label">confirm password:
-      <input type="password"
-        placeholder="confirm password"
-        value={user.passwordCheck} onChange={updateUser('passwordCheck')} />
-    </label><br />
-    <br />
-    <button onClick={register}>Register</button>
-    <button onClick={handleLoginNavigation}>Log In</button>
-  </form>);
+  return (
+    <form className="register-form">
+      <h1>Register</h1>
+      <label htmlFor="firstName">First Name: </label>
+      <input value={user.firstName} onChange={updateUser('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
+      <label htmlFor="lastName">Last Name: </label>
+      <input value={user.lastName} onChange={updateUser('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
+      <label htmlFor="email">Email: </label>
+      <input value={user.email} onChange={updateUser('email')} type="text" name="email" id="email" /><br /><br />
+      <label htmlFor="password">Password: </label>
+      <input value={user.password} onChange={updateUser('password')} type="password" name="password" id="password" /><br /><br />
+      <label htmlFor="passwordCheck">Confirm Password: </label>
+      <input value={user.passwordCheck} onChange={updateUser('passwordCheck')} type="password" name="passwordCheck" id="passwordCheck" /><br /><br />
+      <button className="register-button" onClick={register}>Register</button>
+      <button className="register-button" onClick={handleLoginNavigation}>Login</button>
+    </form>
+  );
 }
