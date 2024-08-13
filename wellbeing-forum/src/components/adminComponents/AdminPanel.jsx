@@ -93,13 +93,14 @@ export default function AdminPanel() {
           <h4>Admin Panel</h4>
           <div>
             <h3>Search</h3>
-            <div>
+            <div className="admin-buttons">
               <button onClick={() => setFilterType('users')}>Search Users</button>
               <button onClick={() => setFilterType('posts')}>Search Posts</button>
             </div>
             {filterType === 'users' && (
               <>
                 <input
+                  id="input-adm"
                   type="text"
                   value={searchQuery}
                   onChange={handleSearchChange}

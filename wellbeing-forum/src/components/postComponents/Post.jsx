@@ -194,9 +194,9 @@ export default function Post({ post }) {
   };
 
   return (
-    <div>
+    <div className="post-container">
       {isEditing ? (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="edit-form">
           <div>
             <label>Title:</label>
             <input
@@ -223,16 +223,19 @@ export default function Post({ post }) {
               onChange={handleChange}
             />
           </div>
-          <button type="submit">Save</button>
-          <button type="button" onClick={toggleEdit}>Cancel</button>
-          <button type="button" onClick={handleDelete}>Delete</button>
+          <div className="post-actions">
+            <button type="submit" className="edit-button">Save</button>
+            <button type="button" onClick={toggleEdit} className="edit-button">Cancel</button>
+            <button type="button" onClick={handleDelete} className="delete-button">Delete</button>
+          </div>
         </form>
       ) : (
-        <>
-          <h3>Title: {post.title}</h3>
-          <p>Content: {post.content}</p>
-          <p>Tags: {post.tags.join(' ')}</p>
-          <p>Created on: {new Date(post.createdOn).toLocaleString('en-US', {
+        <><div className='post-inner'>
+          <h3 className="post-title">{post.title}</h3>
+          <p className="post-content">{post.content}</p>
+          <div className='post-info'>
+          <p className="post-tag">Tags: {post.tags.join(' ')}</p>
+          <p id='created-on'>Created on: {new Date(post.createdOn).toLocaleString('en-US', {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
@@ -241,36 +244,42 @@ export default function Post({ post }) {
             second: '2-digit',
             hour12: false
           })}</p>
-          <p>Created by: {post.author}</p>
-          <button onClick={toggleLike}>
-            {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
-          </button>
-          {userData?.handle === post.author && (
-            <button onClick={toggleEdit}>Edit</button>
-          )}
+          <p id='created-by'>Created by: {post.author}</p>
+          </div>
+          <div className="post-actions">
+            <button onClick={toggleLike} className="like-button">
+              {userData?.handle && post.likedBy.includes(userData.handle) ? 'Dislike' : 'Like'}
+            </button>
+            {userData?.handle === post.author && (
+              <button onClick={toggleEdit} className="edit-button">Edit</button>
+            )}
+          </div>
+          </div>
+          <div className='comments-container'>
           <h4>Comments:</h4>
           {comments.length > 0 ? (
             comments.map(comment => {
-              // Check if the comment is new
               const commentCreationTime = new Date(comment.createdOn).getTime();
               const isNewComment = commentCreationTime >= sessionStartTime.current;
-
+  
               return (
-                <div key={comment.id}>
+                <div className="single-comment" key={comment.id}>
                   {editingCommentId === comment.id ? (
                     <div>
                       <textarea
                         value={commentEditValues[comment.id] || comment.content}
                         onChange={(e) => handleCommentChange(comment.id, e)}
                       />
-                      <button onClick={() => handleSubmitCommentEdit(comment.id)}>Save</button>
-                      <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                      <div className="post-actions">
+                        <button onClick={() => handleSubmitCommentEdit(comment.id)} className="edit-button">Save</button>
+                        <button onClick={() => setEditingCommentId(null)} className="edit-button">Cancel</button>
+                      </div>
                     </div>
                   ) : (
                     <div>
-                      <p>Posted by: {comment.author}</p>
-                      <p>Comment: {comment.content}</p>
-                      <p>
+                      <p id='author'>{comment.author}:</p>
+                      <p id='comment-content'>{comment.content}</p>
+                      <p id='date'>
                         on date/time: {new Date(comment.createdOn).toLocaleString('en-US', {
                           year: 'numeric',
                           month: '2-digit',
@@ -282,10 +291,10 @@ export default function Post({ post }) {
                         })}
                       </p>
                       {userData?.handle === comment.author && !isNewComment && (
-                        <>
-                          <button onClick={() => handleEditComment(comment.id, comment.content)}>Edit</button>
-                          <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
-                        </>
+                        <div className="post-actions">
+                          <button onClick={() => handleEditComment(comment.id, comment.content)} className="edit-button">Edit</button>
+                          <button onClick={() => handleDeleteComment(comment.id)} className="delete-button">Delete</button>
+                        </div>
                       )}
                       <br />
                     </div>
@@ -296,18 +305,20 @@ export default function Post({ post }) {
           ) : (
             <p>No comments yet.</p>
           )}
-          <form onSubmit={handleCommentSubmit}>
-            <div>
-              <label>Comment:</label>
+          <form id="add-comment" onSubmit={handleCommentSubmit}>
+            <div id='comment-section'>
               <input
+              id='comment-input'
                 type="text"
                 name="comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
+                placeholder="Write your comment here..."
               />
+            <button type="submit" className="add-button">Add Comment</button>
             </div>
-            <button type="submit">Add Comment</button>
           </form>
+          </div>
         </>
       )}
     </div>

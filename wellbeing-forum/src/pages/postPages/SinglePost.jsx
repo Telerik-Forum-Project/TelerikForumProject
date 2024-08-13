@@ -28,8 +28,7 @@ export default function SinglePost() {
   }, [id]);
 
   return (
-    <div>
-      <h1>Single Post</h1>
+    <div id="single-container">
       {post ? <Post post={post} /> : <p>Loading...</p>}
     </div>
   );
