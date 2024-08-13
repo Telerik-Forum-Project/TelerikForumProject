@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { AppContext } from "../../state/app.context";
 import { createPost } from "../../services/posts.service";
 import { useNavigate } from "react-router-dom";
+import './CreatePost.css'
 
 export default function CreatePost() {
     const [post, setPost] = useState({
@@ -61,35 +62,34 @@ export default function CreatePost() {
     };
 
     return (
-        <div>
-            <h1>Create Post</h1>
-            <label htmlFor="title">Title: </label>
-            <input
-                value={post.title}
-                onChange={e => updatePost('title', e.target.value)}
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Enter the title of your post"
-            /><br />
-            <label htmlFor="content">Content: </label>
-            <textarea
-                value={post.content}
-                onChange={e => updatePost('content', e.target.value)}
-                name="content"
-                id="content"
-                placeholder="Write the content of your post"
-            /><br /><br />
-            <label htmlFor="tags">Tags (separated by commas): </label>
-            <input
-                value={post.tags}
-                onChange={e => updatePost('tags', e.target.value)}
-                type="text"
-                name="tags"
-                id="tags"
-                placeholder="Enter tags separated by commas (e.g., Fitness, Health)"
-            /><br />
-            <button onClick={handleCreatePost}>Create Post</button>
+        <div id="createPost-container">
+          <label htmlFor="title">Title: </label>
+          <input
+            value={post.title}
+            onChange={e => updatePost('title', e.target.value)}
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter the title of your post"
+          /><br />
+          <label htmlFor="content">Content: </label>
+          <textarea
+            value={post.content}
+            onChange={e => updatePost('content', e.target.value)}
+            name="content"
+            id="content"
+            placeholder="Write the content of your post"
+          /><br /><br />
+          <label htmlFor="tags">Tags (separated by commas): </label>
+          <input
+            value={post.tags}
+            onChange={e => updatePost('tags', e.target.value)}
+            type="text"
+            name="tags"
+            id="tags"
+            placeholder="Enter tags separated by commas (e.g., Fitness, Health)"
+          /><br />
+          <button onClick={handleCreatePost}>Create Post</button>
         </div>
-    )
+      );
 }

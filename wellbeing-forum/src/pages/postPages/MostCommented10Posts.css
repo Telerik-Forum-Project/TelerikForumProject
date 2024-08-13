@@ -1,0 +1,45 @@
+#mostCommented-container {
+    height: 600px;
+    width: 100%;
+    margin-left: 150px;
+    margin-right: 350px;
+}
+
+#mostCommented-container h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#mostCommented-container h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: #007bff;
+}
+
+#mostCommented-container h2 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mostCommented-container h2 a:hover {
+  text-decoration: underline;
+}
+
+#mostCommented-container p {
+  font-size: 1em;
+  color: #666;
+}
+
+.post-item {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background-color: #fff; 
+  transition: box-shadow 0.3s ease; 
+}
+
+.post-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
