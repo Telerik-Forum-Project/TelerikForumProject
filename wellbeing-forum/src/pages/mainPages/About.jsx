@@ -10,6 +10,7 @@ export default function About() {
         <>
         <div className='main-container'>
         <h1>This is a group project created by students of Telerik Academy</h1>
+        <span id='spanid'>The forum is centered around topic about improving your physical and mental wellbeing.</span>
         <h1>Meet the creators:</h1>
         <div id="creator-container">
             <div>

@@ -33,7 +33,7 @@ h1 {
     align-items: center;
     text-align: center;
     font-size: 40px !important;
-    margin-bottom: 150px;
+    margin-bottom: 10px;
     margin-left: 350px;
     margin-right: 80px;
     color: #333;
@@ -48,4 +48,9 @@ h3 {
     height: auto;
     border-radius: 50%; /* Optional: Make the image circular */
     margin-bottom: 10px; /* Optional: Add some space between the image and the name */
+  }
+
+  #spanid {
+    font-size: 20px;
+    margin-left: 550px;
   }
