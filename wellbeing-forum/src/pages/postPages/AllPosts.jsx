@@ -66,55 +66,62 @@ export default function AllPosts() {
     <div id="main-div">
       <h1 id="posts-title">Posts:</h1>
       
-      {/* Search Type Selection */}
-      <div className="search-by-buttons">
-        <label>
+      {/* Search and Filter Container */}
+      <div className="search-container">
+        {/* Search Type Selection */}
+        <div className="search-by-buttons">
+          <label>
+            <input
+              type="radio"
+              value="content"
+              checked={searchType === 'content'}
+              onChange={() => setSearchType('content')}
+            />
+            Search by Content
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="tag"
+              checked={searchType === 'tag'}
+              onChange={() => setSearchType('tag')}
+            />
+            Search by Tag
+          </label>
+        </div>
+  
+        {/* Search Input */}
+        <div className="search-bar">
+          <label htmlFor="search">Search </label>
           <input
-            type="radio"
-            value="content"
-            checked={searchType === 'content'}
-            onChange={() => setSearchType('content')}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            type="text"
+            name="search"
+            id="search"
           />
-          Search by Content
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="tag"
-            checked={searchType === 'tag'}
-            onChange={() => setSearchType('tag')}
-          />
-          Search by Tag
-        </label>
+        </div>
+  
+        {/* Filter Selection */}
+        <div className="filter-selection">
+          <label htmlFor="filter">Filter by: </label>
+          <select id="filter" value={filter} onChange={handleFilterChange}>
+            <option value="">None</option>
+            <option value="lastHour">Last Hour</option>
+            <option value="lastDay">Last Day</option>
+            <option value="lastWeek">Last Week</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="lastYear">Last Year</option>
+            <option value="mostLikes">Most Likes</option>
+          </select>
+        </div>
       </div>
-
-      {/* Search Input */}
-      <label htmlFor="search">Search </label>
-      <input
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        type="text"
-        name="search"
-        id="search"
-      /><br/><br/>
-
-      {/* Filter Selection */}
-      <label htmlFor="filter">Filter by: </label>
-      <select id="filter" value={filter} onChange={handleFilterChange}>
-        <option value="">None</option>
-        <option value="lastHour">Last Hour</option>
-        <option value="lastDay">Last Day</option>
-        <option value="lastWeek">Last Week</option>
-        <option value="lastMonth">Last Month</option>
-        <option value="lastYear">Last Year</option>
-        <option value="mostLikes">Most Likes</option>
-      </select>
-
-      <ul>
+  
+      <ul className="posts-list">
         {filteredPosts.length > 0
           ? filteredPosts.map(p => (
-              <li key={p.id}>
-                Title: {p.title} <button onClick={() => navigate(`/singlepost/${p.id}`)}>read more</button>
+              <li key={p.id} className="post-item">
+                {p.title} <button onClick={() => navigate(`/singlepost/${p.id}`)}>read more</button>
               </li>
             ))
           : 'No posts'
