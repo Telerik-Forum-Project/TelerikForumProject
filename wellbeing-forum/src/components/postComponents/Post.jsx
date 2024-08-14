@@ -196,40 +196,40 @@ export default function Post({ post }) {
   return (
     <div className="post-container">
       {isEditing ? (
-        <form onSubmit={handleSubmit} className="edit-form">
-          <div>
-            <label>Title:</label>
-            <input
-              type="text"
-              name="title"
-              value={editValues.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Content:</label>
-            <textarea
-              name="content"
-              value={editValues.content}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Tags (comma separated):</label>
-            <input
-              type="text"
-              name="tags"
-              value={editValues.tags}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="post-actions">
-            <button type="submit" className="edit-button">Save</button>
-            <button type="button" onClick={toggleEdit} className="edit-button">Cancel</button>
-            <button type="button" onClick={handleDelete} className="delete-button">Delete</button>
-          </div>
-        </form>
-      ) : (
+    <form onSubmit={handleSubmit} className="edit-form">
+      <div>
+        <label>Title:</label>
+        <input
+          type="text"
+          name="title"
+          value={editValues.title}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Content:</label>
+        <textarea
+          name="content"
+          value={editValues.content}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Tags (comma separated):</label>
+        <input
+          type="text"
+          name="tags"
+          value={editValues.tags}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="post-actions">
+        <button type="submit" className="edit-button">Save</button>
+        <button type="button" onClick={toggleEdit} className="edit-button">Cancel</button>
+        <button type="button" onClick={handleDelete} className="delete-button">Delete</button>
+      </div>
+    </form>
+  ) : (
         <><div className='post-inner'>
           <h3 className="post-title">{post.title}</h3>
           <p className="post-content">{post.content}</p>
@@ -306,17 +306,17 @@ export default function Post({ post }) {
             <p>No comments yet.</p>
           )}
           <form id="add-comment" onSubmit={handleCommentSubmit}>
-            <div id='comment-section'>
-              <input
-              id='comment-input'
-                type="text"
-                name="comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Write your comment here..."
-              />
-            <button type="submit" className="add-button">Add Comment</button>
-            </div>
+          <div id='comment-section'>
+      <input
+        id='comment-input'
+        type="text"
+        name="comment"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Write your comment here..."
+      />
+      <button type="submit" className="add-button">Add Comment</button>
+    </div>
           </form>
           </div>
         </>
