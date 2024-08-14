@@ -13,9 +13,9 @@ const firebaseConfig = {
   databaseURL: 'https://wellbeing-forum-telerk-default-rtdb.europe-west1.firebasedatabase.app/'
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
-// the Firebase authentication handler
+
 export const auth = getAuth(app);
-// the Realtime Database handler
+
 export const db = getDatabase(app);

@@ -6,10 +6,6 @@ import './MostCommented10Posts.css'
 export default function MostCommented10Posts() {
 
     const [posts, setPosts] = useState([]);
-    // const navigate = useNavigate();
-    // const [searchParams, setSearchParams] = useSearchParams();
-    // const search = searchParams.get('search') ?? '';
-    //search as useEffect param
 
     useEffect(() => {
         getAllPosts()

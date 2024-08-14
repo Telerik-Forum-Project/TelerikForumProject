@@ -146,13 +146,3 @@ export const getUniqueCommentId = () => {
   const newCommentRef = push(ref(db, 'comments'));
   return newCommentRef.key;
 };
-
-
-// кода на Стоян и той не работи
-
-// export const addCommentToPost = async (postId, comment) => {
-//   const commentRef = ref(db, `Posts/${postId}/comments`);
-//   const result = await push(commentRef, comment);
-
-//    return update(commentRef, {[`${result.key}/id`]:result.key});
-// };

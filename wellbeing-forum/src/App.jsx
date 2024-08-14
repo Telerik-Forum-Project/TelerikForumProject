@@ -32,12 +32,6 @@ function App() {
   const [user] = useAuthState(auth);
   const { isAdminUser, loading } = useAdmin();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setAppState(prevState => ({ ...prevState, user }));
-  //   }
-  // }, [user]);
-
 if (appState.user !== user) {
   setAppState({...appState, user})
 }
