@@ -1,47 +1,47 @@
 .post-container {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
 .post-inner {
-    border: 2px solid #819bcc;
-    border-radius: 12px;
-    margin-top: 130px;
+  border: 2px solid #819bcc;
+  border-radius: 12px;
+  margin-top: 130px;
 }
 
 .post-title {
-    background: linear-gradient(to right, #819bcc, rgb(112, 112, 247), #3969bd);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-left: 10px;
-    position: relative;
-    padding-bottom: 3px;
-    margin-right: 10px;
+  background: linear-gradient(to right, #819bcc, rgb(112, 112, 247), #3969bd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: 10px;
+  position: relative;
+  padding-bottom: 3px;
+  margin-right: 10px;
 }
 
 .post-title::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, #819bcc, rgb(112, 112, 247), #3969bd);
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #819bcc, rgb(112, 112, 247), #3969bd);
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .post-content {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .post-info {
-    display: flex;
-    flex-direction: column-reverse;
-    margin-left: 1650px;
+  display: flex;
+  flex-direction: column-reverse;
+  margin-left: 1650px;
 }
 
 #created-by {
@@ -50,54 +50,222 @@ margin-bottom: -10px;
 }
 
 #created-on {
-    font-size: 12px;
-    margin-bottom: -10px;
+  font-size: 12px;
+  margin-bottom: -10px;
 }
 
 .post-tag {
-    font-size: 15px;
-    margin-bottom: -10px;
+  font-size: 15px;
+  margin-bottom: -10px;
 }
 
 .comments-container {
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-  }
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
 
-  .single-comment {
-    padding: 8px;
-    margin: 5px 0;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-  }
+.single-comment {
+  padding: 8px;
+  margin: 5px 0;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
 
-  #author {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
+#author {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
 
-  #comment-content {
-    font-size: 16px;
-    margin-left: 15px;
-  }
+#comment-content {
+  font-size: 16px;
+  margin-left: 15px;
+}
 
-  #date {
-    font-size: 13px;
-    margin-left: 1600px;
-    margin-bottom: -10px;
-  }
+#date {
+  font-size: 13px;
+  margin-left: 1600px;
+  margin-bottom: -10px;
+}
 
-  #add-comment {
-    margin-top: 10px;
-    margin-left: 10px;
-    font-size: 16px;
-  }
+#add-comment {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+#add-comment {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+#submit-comment {
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#submit-comment:hover {
+  background-color: #0056b3;
+}
+
+
+#comment-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.like-button {
+  padding: 10px 20px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+.like-button:hover {
+  background-color: #ff4c4c;
+  transform: scale(1.05); 
+}
+
+.like-button:active {
+  background-color: #e63946;
+  transform: scale(0.95); 
+}
+
+
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.edit-form input[type="text"],
+.edit-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button,
+.delete-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+.edit-button {
+  background-color: #4682b4; 
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #5a9bd4; 
+  transform: scale(1.05); 
+}
+
+.edit-button:active {
+  background-color: #3b6a8e; 
+  transform: scale(0.95); 
+}
+
+.delete-button {
+  background-color: #ff6b6b; 
+  color: white;
+  margin-left: 15px;
+}
+
+.delete-button:hover {
+  background-color: #ff4c4c; 
+  transform: scale(1.05);
+}
+
+.delete-button:active {
+  background-color: #e63946; 
+  transform: scale(0.95); 
+}
+
+
+#comment-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+
+#comment-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+
+.add-button {
+  padding: 10px 20px;
+  background-color: #4682b4; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #5a9bd4; 
+  transform: scale(1.05);
+}
+
+.add-button:active {
+  background-color: #3b6a8e;
+  transform: scale(0.95); 
+}
