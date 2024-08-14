@@ -64,7 +64,7 @@ export default function AllPosts() {
 
   return (
     <div id="main-div">
-      <h1 id="posts-title">Posts:</h1>
+      <h1 id="posts-title">Posts</h1>
       
       {/* Search and Filter Container */}
       <div className="search-container">

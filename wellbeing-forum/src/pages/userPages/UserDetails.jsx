@@ -48,7 +48,7 @@ export default function UserDetails() {
         <p><strong>Phone Number:</strong> {userData.phoneNumber || 'Not Provided'}</p>
         <p><strong>Account Created On:</strong> {userData.createdOn}</p>
         <p><strong>Admin Status:</strong> {userData.isAdmin ? 'Yes' : 'No'}</p>
-        <button onClick={editUser}>Edit details</button>
+        <button className="edit-button" onClick={editUser}>Edit details</button>
       </div>
     </div>
   );
