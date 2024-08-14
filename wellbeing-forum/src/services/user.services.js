@@ -90,14 +90,3 @@ export const updateUserData = async (uid, updatedData) => {
 export const getCurrentUser = () => {
   return auth.currentUser;
 };
-
-
-// export const createUserHandle = (handle, uid, email) => {
-
-//   return set(ref(db, `users/${handle}`), { handle, uid, email, createdOn: new Date(), likedTweets: {} })
-// };
-
-// export const getUserData = (uid) => {
-
-//   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
-// };
